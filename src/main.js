@@ -1,15 +1,27 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
+import VueRouter from 'vue-router'
+import firebase from 'firebase'
+import firebaseui from 'firebaseui';
 import router from './router'
+import {config} from './firebase/config'
+import '../node_modules/firebaseui/dist/firebaseui.css'
 
-Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+Vue.use(VueRouter)
+
 new Vue({
-  el: '#app',
   router,
-  template: '<App/>',
-  components: { App }
-})
+  created() {
+    firebase.initializeApp(config);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        //this.$router.push('/success')
+      } else {
+        this.$router.push('/auth')
+      }
+     });
+    },
+  el: '#app',
+  render: h => h(App)
+});
