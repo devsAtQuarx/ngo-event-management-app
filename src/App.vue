@@ -1,13 +1,16 @@
 <template>
-  <div id="app">
+  <v-app id="app">
+
     <header>
 
     </header>
-    <main>
 
-      <router-view></router-view>
+    <main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </main>
-  </div>
+  </v-app>
 </template>
 
 <script>
