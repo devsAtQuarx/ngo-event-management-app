@@ -5,6 +5,10 @@ import AuthSuccess from '@/components/AuthSuccess'
 import events from '@/components/events'
 import specEvent from '@/components/specEvent'
 
+import membershipForm from '@/components/membershipForm'
+import page1 from '@/components/membershipForm/page1'
+import page2 from '@/components/membershipForm/page2'
+
 Vue.use(Router)
 
 export default new Router({
@@ -14,7 +18,13 @@ export default new Router({
     {
       path: '/success',  component: AuthSuccess, children:[
         { path:'' , component : events},
-        { path :'/specEvent/:id' , component : specEvent}
+        { path :'/specEvent/:id' , component : specEvent},
+        {path : '/membershipForm' , component : membershipForm ,
+          children:[
+            {path:'' , component:page1},
+            {path:'page2' , component:page2}
+          ]
+        }
       ]
     }
   ]

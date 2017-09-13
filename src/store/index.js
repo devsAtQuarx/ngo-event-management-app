@@ -5,12 +5,16 @@ import auth from './modules/auth'
 import db from './modules/db'
 import events from './modules/events'
 
+import membershipForm from './modules/membershipForm'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules:{
     auth,
     db,
-    events
+    events,
+    
+    membershipForm
   }
 })

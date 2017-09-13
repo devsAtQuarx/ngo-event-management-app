@@ -9,6 +9,7 @@ import {store} from './store'
 import Vuetify from 'vuetify'
 import '../node_modules/firebaseui/dist/firebaseui.css'
 import '../node_modules/vuetify/dist/vuetify.min.css'
+import './assets/css/lib/googleFont.css'
 
 
 Vue.use(VueRouter)

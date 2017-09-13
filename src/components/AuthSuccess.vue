@@ -1,24 +1,46 @@
 <template>
   <div>
+    <v-navigation-drawer
+      persistent
+      v-model="drawer"
+      light
+      enable-resize-watcher
+      absolute
+    >
+      <v-list dense>
 
-    <div>
-      <button @click='logOut'>Log out</button>
-      <img :src="user.photoURL" style='height: 120px'><br>
-      <span>{{user.displayName}} -
-        {{user.email}} -
-        {{user.uid}}
-      </span>
-    </div>
+        <v-list-tile @click="goToHome">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
 
-    <hr>
+        <!-- arrange these in buttons -->
+        <button @click='logOut'>Log out</button>
+        <img :src="user.photoURL" style='height: 120px'><br>
+        <span>{{user.displayName}} -
+          {{user.email}} -
+          {{user.uid}}
+        </span>
+        <button @click="goToMembershipForm">membership</button>
 
-    <div>
-      <!--put drawer/toolbar/nav etc .. -->
-    </div>
 
-    <div>
-      <router-view></router-view>
-    </div>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-toolbar class="indigo" dark fixed>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>Toolbar</v-toolbar-title>
+    </v-toolbar>
+
+    <main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </main>
 
   </div>
 </template>
@@ -32,7 +54,7 @@ export default {
   //
   data(){
      return {
-
+        drawer: true
      }
    },
 
@@ -43,8 +65,17 @@ export default {
 
   //
   methods: {
+
     logOut() {
       firebase.auth().signOut();
+    },
+
+    goToHome(){
+      this.$router.push('/success')
+    },
+
+    goToMembershipForm(){
+      this.$router.push('/membershipForm')
     }
   },
 

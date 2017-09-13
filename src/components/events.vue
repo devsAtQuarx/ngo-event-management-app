@@ -113,10 +113,10 @@ export default{
       //console.log(vm.$store.state.events.eventsArr[0].key)
 
       if(Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key){
-        console.log("eq")
+        //console.log("eq")
         //do nothing
       }else{
-        console.log("not eq")
+        //console.log("not eq")
 
         let newEvent = snapshot.val()
         newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
