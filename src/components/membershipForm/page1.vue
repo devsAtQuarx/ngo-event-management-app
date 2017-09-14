@@ -181,7 +181,8 @@ export default{
   //methods
   methods:{
     goToPage2(){
-      console.log(this.$store.state.membershipForm.membershipFormData)
+      let vm = this
+      //console.log(this.$store.state.membershipForm.membershipFormData)
       let membershipFormData = this.$store.state.membershipForm.membershipFormData
       if(membershipFormData.fullName.length != 0 &&
           membershipFormData.gender.length != 0 &&
@@ -191,7 +192,20 @@ export default{
                   membershipFormData.profileDesc.length < 500 &&
                     membershipFormData.dob.length != 0 &&
                       membershipFormData.bloodGroup != null){
-        this.$router.push('/membershipForm/page2')
+
+        //save data to firebase
+        this.$store.state.db.db.ref('membershipDetail/'+
+          this.$store.state.auth.user.uid)
+          .set(this.$store.state.membershipForm.membershipFormData).then(function(snapshot){
+              //console.log("saving ...")
+
+
+
+              vm.$router.push('/membershipForm/page2')
+              //stop preloader
+
+          })
+
       }else{
         //generate a toast => required fields are not filled
       }

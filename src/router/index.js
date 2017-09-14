@@ -8,6 +8,7 @@ import specEvent from '@/components/specEvent'
 import membershipForm from '@/components/membershipForm'
 import page1 from '@/components/membershipForm/page1'
 import page2 from '@/components/membershipForm/page2'
+import lastPage from '@/components/membershipForm/lastPage'
 
 Vue.use(Router)
 
@@ -22,7 +23,8 @@ export default new Router({
         {path : '/membershipForm' , component : membershipForm ,
           children:[
             {path:'' , component:page1},
-            {path:'page2' , component:page2}
+            {path:'page2' , component:page2},
+            {path:'lastPage' , component:lastPage}
           ]
         }
       ]
