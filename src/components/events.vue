@@ -4,9 +4,10 @@
     <li v-for="(event,i) in eventsArr">
       {{event}}
       <button @click="goToSpecEvent(event, i)">See Detail</button>
+      <button @click="joinEvent(event)">join event</button>
     </li>
 
-    <button @click="loadMoreEvents()">
+    <button @click="loadMoreEvents()" >
       load more events ...
     </button>
 
@@ -28,6 +29,23 @@ export default{
 
   //methods
   methods:{
+
+    //joinEvent
+    joinEvent(event){
+      //console.log(event.key)
+      console.log(event.title)
+
+      //check if already joined -> for which event are showing on screen
+       
+
+
+      this.$store.state.db.db.ref('peopleInEvent/'+event.key + "/" + this.$store.state.auth.user.uid)
+        .set(this.$store.state.auth.user.displayName)
+
+      this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid + "/" + event.key)
+        .set(event.title)
+
+    },
 
     //goToSpecEvent
     goToSpecEvent(event, i){

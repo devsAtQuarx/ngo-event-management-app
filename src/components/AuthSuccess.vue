@@ -77,6 +77,7 @@ export default {
     goToMembershipForm(){
       // if already a member & member ship no is generated just show in popup
       //or routte to a page to show membership no/or change detail
+      
       this.$router.push('/membershipForm')
     }
   },

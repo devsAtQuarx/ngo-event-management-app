@@ -6,6 +6,7 @@ import db from './modules/db'
 import events from './modules/events'
 
 import membershipForm from './modules/membershipForm'
+import joinedEvent from './modules/joinedEvent'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export const store = new Vuex.Store({
     auth,
     db,
     events,
-    
-    membershipForm
+
+    membershipForm,
+    joinedEvent
   }
 })
