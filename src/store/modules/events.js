@@ -1,6 +1,8 @@
 const state = {
   eventsArr : [],
-  count : 0
+  count : 0,
+  myEvents : [],
+  myEventCount : 0
 }
 
 const getters = {
@@ -9,6 +11,9 @@ const getters = {
   },
   count : state => {
     return state.count
+  },
+  myEvents : state =>{
+    return state.myEvents
   }
 }
 

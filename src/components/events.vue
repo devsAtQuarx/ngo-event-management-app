@@ -32,19 +32,19 @@ export default{
 
     //joinEvent
     joinEvent(event){
-      //console.log(event.key)
-      console.log(event.title)
-
       //check if already joined -> for which event are showing on screen
-       
-
-
+      //here !
       this.$store.state.db.db.ref('peopleInEvent/'+event.key + "/" + this.$store.state.auth.user.uid)
         .set(this.$store.state.auth.user.displayName)
 
-      this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid + "/" + event.key)
-        .set(event.title)
+      let tmpObj = {
+         eventKey  : event.key ,
+         title : event.title
+      }
+      this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid)
+        .push(tmpObj)
 
+        //toast joined
     },
 
     //goToSpecEvent
@@ -94,7 +94,7 @@ export default{
       //console.log("loadMore")
       let vm = this
       this.$store.state.events.count += 2
-      //console.log(this.$store.state.events.count)
+      console.log(this.$store.state.events.count)
       if(vm.$store.state.events.eventsArr[this.$store.state.events.count]
           != undefined ){
         this.$store.state.db.db.ref('events/')
