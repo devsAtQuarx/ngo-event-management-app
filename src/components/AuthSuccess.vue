@@ -26,7 +26,7 @@
           {{user.uid}}
         </span>
         <button @click="goToMembershipForm">membership</button>
-
+        <button @click="goToMyEvents">my events</button>
 
       </v-list>
     </v-navigation-drawer>
@@ -66,6 +66,10 @@ export default {
   //
   methods: {
 
+    goToMyEvents(){
+      this.$router.push('/myEvents')
+    },
+
     logOut() {
       firebase.auth().signOut();
     },
@@ -77,7 +81,7 @@ export default {
     goToMembershipForm(){
       // if already a member & member ship no is generated just show in popup
       //or routte to a page to show membership no/or change detail
-      
+
       this.$router.push('/membershipForm')
     }
   },

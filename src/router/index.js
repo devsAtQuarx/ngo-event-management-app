@@ -4,6 +4,8 @@ import Auth from '@/components/Auth'
 import AuthSuccess from '@/components/AuthSuccess'
 import events from '@/components/events'
 import specEvent from '@/components/specEvent'
+import myEvents from '@/components/myEvents'
+import feedback from '@/components/feedback'
 
 import membershipForm from '@/components/membershipForm'
 import page1 from '@/components/membershipForm/page1'
@@ -20,6 +22,8 @@ export default new Router({
       path: '/success',  component: AuthSuccess, children:[
         { path:'' , component : events},
         { path :'/specEvent/:id' , component : specEvent},
+        {path:'/myEvents' , component:myEvents},
+        {path:'/feedback/:id',component:feedback},
         {path : '/membershipForm' , component : membershipForm ,
           children:[
             {path:'' , component:page1},

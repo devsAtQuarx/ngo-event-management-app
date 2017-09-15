@@ -34,7 +34,7 @@ new Vue({
 
         //this.$router.push('/success')
         store.state.auth.user = user
-
+        
       } else {
         this.$router.push('/')
       }
