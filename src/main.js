@@ -14,8 +14,6 @@ import './assets/css/lib/googleFont.css'
 
 Vue.use(VueRouter)
 Vue.use(Vuetify)
-
-
 Vue.use(VueRouter)
 
 new Vue({
@@ -34,7 +32,7 @@ new Vue({
 
         //this.$router.push('/success')
         store.state.auth.user = user
-        
+
       } else {
         this.$router.push('/')
       }

@@ -4,7 +4,7 @@
     <li v-for="(event,i) in eventsArr">
       {{event}}
       <button @click="goToSpecEvent(event, i)">See Detail</button>
-      <button @click="joinEvent(event)">join event</button>
+      <button @click="getJoinedStatus(event,i)">join event</button>
     </li>
 
     <button @click="loadMoreEvents()" >
@@ -57,18 +57,23 @@ export default{
         let vm = this
         this.$store.state.db.db.ref('events/').limitToLast(3)
         .once('value',function(snapshot){
-          vm.showEventsOnDom(snapshot.val())
+          vm.reverseFetchedEventsOrder(snapshot.val())
         })
     },
 
-    //showEventsOnDom
-    showEventsOnDom(fetchedEvents){
+    //reverseFetchedEventsOrder
+    reverseFetchedEventsOrder(fetchedEvents){
       let tempEventArr = []
       for(let i in fetchedEvents){
         fetchedEvents[i].key = i
         tempEventArr.push(fetchedEvents[i])
       }
       tempEventArr.reverse()
+      this.showEventsOnDom(tempEventArr)
+    },
+
+    showEventsOnDom(tempEventArr){
+      //
       if(this.$store.state.events.eventsArr.length == 0){
         this.$store.state.events.eventsArr = tempEventArr
       }else{
@@ -84,9 +89,23 @@ export default{
       //console.log(fetchedEvents)
     },
 
-    //reverseGotData
-    reverseGotData(){
-
+    getJoinedStatus(event,i){
+      let vm = this
+      let joinedStatus = false
+      this.$store.state.db.db.ref('peopleInEvent/'+ event.key + '/' +this.$store.state.auth.user.uid )
+      .once('value',function(snapshot) {
+        //null if not joined
+        //console.log(snapshot.val())
+        if(snapshot.val() == null) {
+          //no joined
+          this.joinEvent(event)
+          //toast => joined !
+        }else{
+          //joined
+          //console.log(snapshot.val())
+          //toast => already joined
+        }
+      })
     },
 
     //loadMore
@@ -94,7 +113,7 @@ export default{
       //console.log("loadMore")
       let vm = this
       this.$store.state.events.count += 2
-      console.log(this.$store.state.events.count)
+      //console.log(this.$store.state.events.count)
       if(vm.$store.state.events.eventsArr[this.$store.state.events.count]
           != undefined ){
         this.$store.state.db.db.ref('events/')
@@ -104,21 +123,20 @@ export default{
         .once('value',function(snapshot){
           //console.log(snapshot.val())
           //
-          vm.showEventsOnDom(snapshot.val())
+          vm.reverseFetchedEventsOrder(snapshot.val())
         })
       }else{
         // nothing to load more
       }
-    }
+    },
+
   },
 
   //mounted
   beforeMount(){
-
     if(this.$store.state.events.eventsArr.length == 0){
       this.getEvents()
     }
-
   },
 
   //updated
@@ -151,7 +169,8 @@ export default{
   computed:{
     ...mapGetters([
       'eventsArr'
-    ])
+    ]),
+
   },
 }
 </script>

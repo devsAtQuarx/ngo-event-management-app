@@ -53,7 +53,7 @@ export default{
       this.$store.state.db.db.ref('feedbackUser/' + this.$route.params.id + '/' +
         this.$store.state.auth.user.uid)
         .once('value',function(snapshot){
-          console.log(snapshot.val())
+          //console.log(snapshot.val())
           if(snapshot.val() == null){
             vm.showFeedback = 'null'
           }else{

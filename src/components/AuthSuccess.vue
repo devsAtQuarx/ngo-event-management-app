@@ -27,6 +27,7 @@
         </span>
         <button @click="goToMembershipForm">membership</button>
         <button @click="goToMyEvents">my events</button>
+        <button @click="goToEventAttendance">event Attendance</button>
 
       </v-list>
     </v-navigation-drawer>
@@ -76,6 +77,10 @@ export default {
 
     goToHome(){
       this.$router.push('/success')
+    },
+
+    goToEventAttendance(){
+      this.$router.push('/eventAttendance')
     },
 
     goToMembershipForm(){
