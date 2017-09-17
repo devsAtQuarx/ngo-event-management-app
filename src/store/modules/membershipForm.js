@@ -25,6 +25,14 @@ const state = {
     suburb : '',
     city : '',
 
+    //page3
+    referalDetails : '',
+    areaOfInterest : '',
+    experience : '',
+    association : '',
+
+    //page4
+
     //lastPage
     membershipNo : ''
 

@@ -11,6 +11,8 @@ import eventAttendance from '@/components/eventAttendance'
 import membershipForm from '@/components/membershipForm'
 import page1 from '@/components/membershipForm/page1'
 import page2 from '@/components/membershipForm/page2'
+import page3 from '@/components/membershipForm/page3'
+import page4 from '@/components/membershipForm/page4'
 import lastPage from '@/components/membershipForm/lastPage'
 
 Vue.use(Router)
@@ -30,6 +32,8 @@ export default new Router({
           children:[
             {path:'' , component:page1},
             {path:'page2' , component:page2},
+            {path:'page3' , component:page3},
+            {path:'page4' , component:page4},
             {path:'lastPage' , component:lastPage}
           ]
         }

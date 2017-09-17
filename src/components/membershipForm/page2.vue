@@ -195,9 +195,6 @@ export default{
                                   membershipFormData.address.length != 0 &&
                                       membershipFormData.city.length != 0){
 
-        //2nd last page thing -> save membership No(uid)
-        this.$store.state.membershipForm.membershipFormData.membershipNo =
-          this.$store.state.auth.user.uid
 
         //save data to firebase
         this.$store.state.db.db.ref('membershipDetail/'+
@@ -206,7 +203,7 @@ export default{
               //console.log("saving ...")
 
 
-              vm.$router.push('/membershipForm/lastPage')
+              vm.$router.push('/membershipForm/page3')
               //stop preloader
 
 
