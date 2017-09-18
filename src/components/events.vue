@@ -98,7 +98,7 @@ export default{
         //console.log(snapshot.val())
         if(snapshot.val() == null) {
           //no joined
-          this.joinEvent(event)
+          vm.joinEvent(event)
           //toast => joined !
         }else{
           //joined
