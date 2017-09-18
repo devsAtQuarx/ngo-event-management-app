@@ -81,9 +81,6 @@
                 membershipFormData.association.length != 0
           ){
 
-          //2nd last page thing -> save membership No(uid)
-          this.$store.state.membershipForm.membershipFormData.membershipNo =
-            this.$store.state.auth.user.uid
 
           //save data to firebase
           this.$store.state.db.db.ref('membershipDetail/'+

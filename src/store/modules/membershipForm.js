@@ -32,6 +32,14 @@ const state = {
     association : '',
 
     //page4
+    volOpts:{
+      event : '',
+      skill :'',
+      fund : '',
+      netRes : '',
+      other : '',
+      otherTxt :''
+    },
 
     //lastPage
     membershipNo : ''

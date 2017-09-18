@@ -86,8 +86,17 @@ export default {
     goToMembershipForm(){
       // if already a member & member ship no is generated just show in popup
       //or routte to a page to show membership no/or change detail
+      let vm = this
+      this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+        .once('value',function(snapshot){
+          console.log(snapshot.val())
+          if(snapshot.val() == null){
+            vm.$router.push('/membershipForm')
+          }else{
+            vm.$router.push('/membershipForm/lastPage')
+          }
+        })
 
-      this.$router.push('/membershipForm')
     }
   },
 
