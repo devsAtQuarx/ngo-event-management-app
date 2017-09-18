@@ -33,6 +33,17 @@ new Vue({
         //this.$router.push('/success')
         store.state.auth.user = user
 
+        let tmpUserObj = {
+          uid : user.uid,
+          name : user.displayName,
+          photoUrl : user.photoURL,
+          email : user.email
+        }
+
+        //save user detail in database
+        store.state.db.db.ref('userAuthDetail/' + user.uid)
+          .set(tmpUserObj)
+
       } else {
         this.$router.push('/')
       }
