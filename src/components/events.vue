@@ -31,7 +31,7 @@ export default{
   methods:{
 
     //joinEvent
-    joinEvent(event){
+    joinEvent(event,i){
       //check if already joined -> for which event are showing on screen
       //here !
 
@@ -42,6 +42,9 @@ export default{
 
       this.$store.state.db.db.ref('peopleInEvent/'+event.key)
         .push(tmpUserDetail)
+
+      this.$store.state.db.db.ref('checkPeopleInEvent/'+ event.key + '/' +this.$store.state.auth.user.uid)
+        .set(tmpUserDetail)
 
       let tmpObj = {
          eventKey  : event.key ,
@@ -97,15 +100,16 @@ export default{
     },
 
     getJoinedStatus(event,i){
+      console.log(event.key)
       let vm = this
       let joinedStatus = false
-      this.$store.state.db.db.ref('peopleInEvent/'+ event.key + '/' +this.$store.state.auth.user.uid )
+      this.$store.state.db.db.ref('checkPeopleInEvent/'+ event.key + '/' +this.$store.state.auth.user.uid )
       .once('value',function(snapshot) {
         //null if not joined
         //console.log(snapshot.val())
         if(snapshot.val() == null) {
           //no joined
-          vm.joinEvent(event)
+          vm.joinEvent(event,i)
           //toast => joined !
         }else{
           //joined
@@ -152,23 +156,24 @@ export default{
     this.$store.state.db.db.ref('events/')
     .limitToLast(1)
     .on('value',function(snapshot){
-      //console.log(Object.keys(snapshot.val())[0])
-      //console.log(vm.$store.state.events.eventsArr[0].key)
+      if(snapshot.val() != null) {
+        //console.log(Object.keys(snapshot.val())[0])
+        //console.log(vm.$store.state.events.eventsArr[0].key)
 
-      if(Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key){
-        //console.log("eq")
-        //do nothing
-      }else{
-        //console.log("not eq")
+        if (Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key) {
+          //console.log("eq")
+          //do nothing
+        } else {
+          //console.log("not eq")
 
-        let newEvent = snapshot.val()
-        newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
-        vm.$store.state.events.eventsArr.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
-        vm.$store.state.events.count += 1
+          let newEvent = snapshot.val()
+          newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+          vm.$store.state.events.eventsArr.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+          vm.$store.state.events.count += 1
 
-        //toast
+          //toast
+        }
       }
-
     })
   },
 

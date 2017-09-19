@@ -123,23 +123,24 @@ export default{
     this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid)
     .limitToLast(1)
     .on('value',function(snapshot){
-      //console.log(Object.keys(snapshot.val())[0])
-      //console.log(vm.$store.state.events.eventsArr[0].key)
+      if(snapshot.val() != null) {
+        //console.log(Object.keys(snapshot.val())[0])
+        //console.log(vm.$store.state.events.eventsArr[0].key)
 
-      if(Object.keys(snapshot.val())[0] == vm.$store.state.events.myEvents[0].key){
-        //console.log("eq")
-        //do nothing
-      }else{
-        //console.log("not eq")
+        if (Object.keys(snapshot.val())[0] == vm.$store.state.events.myEvents[0].key) {
+          //console.log("eq")
+          //do nothing
+        } else {
+          //console.log("not eq")
 
-        let newEvent = snapshot.val()
-        newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
-        vm.$store.state.events.myEvents.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
-        vm.$store.state.events.myEventCount += 1
+          let newEvent = snapshot.val()
+          newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+          vm.$store.state.events.myEvents.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+          vm.$store.state.events.myEventCount += 1
 
-        //toast
+          //toast
+        }
       }
-
     })
   },
 
