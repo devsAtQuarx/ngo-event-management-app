@@ -40,11 +40,22 @@ new Vue({
           email : user.email
         }
 
-        //save user detail in database
-        store.state.db.db.ref('userAuthDetail/' + user.uid)
-          .set(tmpUserObj)
 
-      } else {
+        store.state.db.db.ref('checkAuthDetail/' + user.uid)
+          .once('value',function (snapshot) {
+            console.log(snapshot.val())
+            if(snapshot.val() == null){
+              //save user detail in database
+              store.state.db.db.ref('userAuthDetail/')
+                .push(tmpUserObj)
+
+              //save user detail in database
+              store.state.db.db.ref('checkAuthDetail/' + user.uid)
+                .set(tmpUserObj)
+            }
+          })
+
+      }else {
         this.$router.push('/')
       }
     });
