@@ -34,13 +34,20 @@ export default{
     joinEvent(event){
       //check if already joined -> for which event are showing on screen
       //here !
-      this.$store.state.db.db.ref('peopleInEvent/'+event.key + "/" + this.$store.state.auth.user.uid)
-        .set(this.$store.state.auth.user.displayName)
+
+      let tmpUserDetail = {
+        uid:this.$store.state.auth.user.uid,
+        name:this.$store.state.auth.user.displayName
+      }
+
+      this.$store.state.db.db.ref('peopleInEvent/'+event.key)
+        .push(tmpUserDetail)
 
       let tmpObj = {
          eventKey  : event.key ,
          title : event.title
       }
+
       this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid)
         .push(tmpObj)
 
