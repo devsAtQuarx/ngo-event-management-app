@@ -159,19 +159,26 @@ export default{
       if(snapshot.val() != null) {
         //console.log(Object.keys(snapshot.val())[0])
         //console.log(vm.$store.state.events.eventsArr[0].key)
+        console.log(vm.$store.state.events.eventsArr)
+        if(vm.$store.state.events.eventsArr.length != 0) {
+          if (Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key) {
+            //console.log("eq")
+            //do nothing
+          } else {
+            //console.log("not eq")
 
-        if (Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key) {
-          //console.log("eq")
-          //do nothing
-        } else {
-          //console.log("not eq")
+            let newEvent = snapshot.val()
+            newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+            vm.$store.state.events.eventsArr.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+            vm.$store.state.events.count += 1
 
+            //toast
+          }
+        }else{
           let newEvent = snapshot.val()
           newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
           vm.$store.state.events.eventsArr.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
           vm.$store.state.events.count += 1
-
-          //toast
         }
       }
     })
