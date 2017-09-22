@@ -60,7 +60,7 @@
 
              <v-tabs-item class="pl-0 pr-0">
                <!--v-dialog v-model="dialog" lazy absolute-->
-               <v-list-tile @click=""  class="pl-0 pr-0">
+               <v-list-tile @click="checkIfMember(event,i)"  class="pl-0 pr-0">
                  <v-icon class="icon_font">fa-calendar-check-o</v-icon>
                </v-list-tile>
                <span style="font-size:10px;margin-top:-15px">Join Event</span>
@@ -119,6 +119,30 @@ export default{
 
   //methods
   methods:{
+
+    checkIfMember(event,i){
+      let vm = this
+      this.$store.state.db.db.ref('membershipDetail/'+this.$store.state.auth.user.uid)
+        .once('value',function(snapshot){
+          console.log('memberShip',snapshot.val())
+          if(snapshot.val != null){
+            //cehck if already joined
+            vm.$store.state.db.db.ref('joinedEvent/' + vm.$store.state.auth.user.uid)
+              .orderByChild("eventKey").equalTo(event.key)
+              .once('value',function (snapshot2) {
+                console.log('already joined',snapshot2.val())
+                if(snapshot2.val() != null){
+                  //already joined => toast or popup
+                }else{
+                  vm.joinEvent(event,i)
+                }
+              })
+          }else{
+            //not a member =>
+            //dialog or toast or redirect whatever !
+          }
+        })
+    },
 
     //joinEvent
     joinEvent(event,i){
