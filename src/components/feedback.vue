@@ -1,20 +1,32 @@
 <template>
   <div>
-    feedback {{$route.params.id}}
-
-    <span v-if="showFeedback.length == 0">wait...</span>
+    <div class="preload" v-if="showFeedback.length == 0"></div>
     <span v-else-if ="showFeedback == 'null'">
       <v-text-field
         label="Feedback"
         v-model="feedback"
         textarea
       ></v-text-field>
-      <v-btn @click="submitFeedback">submit</v-btn>
-    </span>
-    <span v-else>
-      {{showFeedback}}
-    </span>
+      <v-btn
+        small
+         primary
+         dark
+         right
+         bottom
+         fixed
+         slot="activator"
+         @click="submitFeedback"
+         class="create-button"
+         >Submit
+       </v-btn>
 
+    </span>
+    <div v-else>
+    <p class="grey--text display-1 text-xs-center">You've submitted your feedback</p>
+    <p  class="grey--text">
+      {{showFeedback}}
+    </p>
+  </div>
   </div>
 </template>
 
@@ -86,3 +98,21 @@ export default{
   }
 }
 </script>
+<style>
+.preload {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -42px 0 0 -12px;
+  background: #1976d2;
+  transform: rotate(45deg);
+  animation: spin 1s infinite linear;
+  z-index: 7000;
+}
+@keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
+}
+</style>

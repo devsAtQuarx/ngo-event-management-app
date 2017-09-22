@@ -1,10 +1,11 @@
 <template>
   <div>
-    eventAttendance
+    <p class="grey--text display-1 text-xs-center">Scan the QR code for Attendance</p>
+    <v-layout justify-space-around>
     <qrcode-reader :active="stillActive" @capture="onCapture">
       {{ readData }}
     </qrcode-reader>
-
+  </v-layout>
   </div>
 </template>
 

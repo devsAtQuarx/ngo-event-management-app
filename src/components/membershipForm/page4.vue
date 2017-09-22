@@ -1,7 +1,7 @@
 <template>
   <div>
-    page4
-    <p>Your interest areas with Umang Foundation...</p>
+
+    <p class="grey--text text-xs-center">Your interest areas with Umang Foundation...</p>
 
     <v-layout row wrap justify-space-around>
       <v-flex xs12 md10 lg10 >
@@ -55,8 +55,20 @@
         <span class="junk">j</span>
       </v-flex>
     </v-layout>
+    <v-btn
+      small
+       primary
+       dark
+       right
+       bottom
+       fixed
+       slot="activator"
+       @click="goToPage5"
+       class="create-button"
+       >Next
+     </v-btn>
 
-    <v-btn @click="goToPage5">Submit</v-btn>
+    
 
   </div>
 </template>

@@ -142,9 +142,26 @@
         </v-flex>
       </v-layout>
 
-      <v-btn @click="goToPage2">Next</v-btn>
+
+
+
+
+
 
     </v-form>
+
+    <v-btn
+      small
+       primary
+       dark
+       right
+       bottom
+       fixed
+       slot="activator"
+       @click="goToPage2"
+       class="create-button"
+       >Next
+     </v-btn>
 
   </div>
 </template>

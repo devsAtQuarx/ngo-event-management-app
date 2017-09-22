@@ -1,20 +1,54 @@
 <template>
-  <div>
-    <span v-if="myEvents.length == 0">
-      {{showErrMsg}}
-    </span>
-    <span v-else>
-      <li v-for="(event,i) in myEvents">
-        {{event}}
-        <button @click="eventDetail(event)">event detail</button>
-        <button @click="addFeedback(event)">feedback</button>
-      </li>
-      <button @click="loadMoreMyEvents">load more my events</button>
-    </span>
+  <div >
+    <v-layout row wrap justify-space-around>
+      <v-flex  md10 lg8>
+      <p v-if="myEvents.length == 0" class="display-1 text-vs-center grey--text">
+        You have joined no Events
+      </p>
+
+      <v-list v-else class="grey lighten-4">
+
+     <v-list-tile v-for="(event,i) in myEvents" >
+
+      <div class="grey--text">{{event.title}}</div>
+      <v-divider style="margin-left:10px"></v-divider>
+        <v-btn outline fab small class=" grey--text" @click="eventDetail(event)" >
+          <v-icon style="font-size:14px">fa-list</v-icon>
+        </v-btn>
+         <v-btn outline fab small class=" grey--text" @click="addFeedback(event)">
+           <v-icon style="font-size:18px">fa-pencil-square-o</v-icon>
+         </v-btn>
+
+      </v-list-tile>
+
+     </v-list>
+   </v-flex>
+   </v-layout>
+
+
+
+
+
+
+    <infinite-loading
+      v-if="myEvents.length >= 3 && showLoader == true"
+      :on-infinite="onInfinite"
+      ref="infiniteLoading"
+      class = "infiniteLoading"
+    >
+    </infinite-loading>
+
+
+
+
+
+
+
   </div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default{
 
@@ -83,12 +117,17 @@ export default{
           //console.log(snapshot.val())
           //
           vm.showMyEventsOnDom(snapshot.val())
+          vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
         })
       }else{
         // nothing to load more
+        this.$store.state.events.showLoader = false
         //count --
       }
     },
+    onInfinite() {
+      this.loadMoreEvents()
+  },
 
     //eventDetail
     eventDetail(event){
@@ -147,9 +186,12 @@ export default{
   //computed
   computed:{
     ...mapGetters([
-      'myEvents'
+      'myEvents','showLoader'
     ])
   },
+  components:{
+   InfiniteLoading
+ },
 
   //beforeMount
   beforeMount(){
@@ -160,3 +202,18 @@ export default{
 
 }
 </script>
+<style scoped>
+
+.icon_font{
+  font-size:19px
+}
+.events_layout{
+ margin-top: -4.9vh !important;
+}
+
+
+main {
+    padding-top: 0px !important;
+}
+
+</style>

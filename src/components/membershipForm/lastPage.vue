@@ -1,8 +1,21 @@
 <template>
   <div>
-    Your Membership No is =>
-    {{showMembershipNo}}
-    <v-btn @click="goToHome">goToHome</v-btn>
+  <p class="text-xs-center ">  Your Membership No is </p>
+  <br>
+    <p class="grey--text text-xs-center display-1"> {{showMembershipNo}}</p>
+    
+    <v-btn
+      small
+       primary
+       dark
+       right
+       bottom
+       fixed
+       slot="activator"
+       @click="goToHome"
+       class="create-button"
+       >Home
+     </v-btn>
   </div>
 </template>
 

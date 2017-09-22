@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>To know more about you...</p>
+    <p class="grey--text text-xs-center">To know more about you...</p>
 
     <v-layout row wrap justify-space-around>
       <v-flex xs12 md10 lg10 >
@@ -58,7 +58,19 @@
       </v-flex>
     </v-layout>
 
-    <v-btn @click="goToPage4">Submit</v-btn>
+            <v-btn
+              small
+               primary
+               dark
+               right
+               bottom
+               fixed
+               slot="activator"
+               @click="goToPage4"
+               class="create-button"
+               >Next
+             </v-btn>
+
 
   </div>
 </template>

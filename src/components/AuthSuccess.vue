@@ -6,36 +6,74 @@
       light
       enable-resize-watcher
       absolute
+      class="grey lighten-4"
+      style="z-index:5"
     >
-      <v-list dense>
+      <v-list dense class="grey lighten-4">
 
-        <v-list-tile @click="goToHome">
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
+        <v-list-tile avatar @click="">
+          <v-list-tile-avatar>
+               <img v-bind:src="user.photoURL"/>
+          </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
+            <v-list-tile-title>{{user.displayName}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
-        <!-- arrange these in buttons -->
-        <button @click='logOut'>Log out</button>
-        <img :src="user.photoURL" style='height: 120px'><br>
-        <span>{{user.displayName}} -
-          {{user.email}} -
-          {{user.uid}}
-        </span>
-        <button @click="goToMembershipForm">membership</button>
-        <button @click="goToMyEvents">my events</button>
-        <button @click="goToEventAttendance">event Attendance</button>
+
+
+        <v-list class="pt-0 grey lighten-4" dense >
+          <v-divider></v-divider>
+          <v-list-tile @click="goToHome">
+           <v-list-tile-action>
+             <v-icon>home</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>Home</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="goToMembershipForm">
+           <v-list-tile-action>
+             <v-icon style="font-size:18px">fa-address-card</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>Membership</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="goToMyEvents">
+           <v-list-tile-action>
+             <v-icon>events</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>My Events</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="goToEventAttendance">
+           <v-list-tile-action>
+             <v-icon style="font-size:18px">fa-camera</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>Attendance</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="logOut">
+           <v-list-tile-action>
+             <v-icon style="font-size:20px">fa-sign-out</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>Logout</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
 
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar class="indigo" dark fixed>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Toolbar</v-toolbar-title>
-    </v-toolbar>
+    <v-toolbar class="red accent-3" style="z-index:4" dark fixed>
+       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+       <v-toolbar-title>Toolbar</v-toolbar-title>
+     </v-toolbar>
 
     <main>
       <v-container fluid>

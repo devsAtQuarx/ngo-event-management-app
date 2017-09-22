@@ -140,7 +140,20 @@
       </v-flex>
     </v-layout>
 
-    <v-btn @click="goToPage3">Submit</v-btn>
+    
+
+        <v-btn
+          small
+           primary
+           dark
+           right
+           bottom
+           fixed
+           slot="activator"
+           @click="goToPage3"
+           class="create-button"
+           >Next
+         </v-btn>
     <span class="text-field-optional-warning"></span>
 
   </div>
