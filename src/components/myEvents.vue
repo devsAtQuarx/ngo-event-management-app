@@ -126,8 +126,8 @@ export default{
       }
     },
     onInfinite() {
-      this.loadMoreEvents()
-  },
+      this.loadMoreMyEvents()
+    },
 
     //eventDetail
     eventDetail(event){
