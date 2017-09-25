@@ -26,7 +26,7 @@ new Vue({
     store.state.db.db = firebaseApp.database()
     store.state.db.storage = firebase.storage()
 
-    const messaging = firebase.messaging()
+    /*const messaging = firebase.messaging()
     messaging.requestPermission()
       .then(function () {
         console.log('have permission')
@@ -34,23 +34,10 @@ new Vue({
       })
       .then(function (token) {
         console.log(token)
-        let registrationToken = token
-        let topic = 'pushNots'
-        // Subscribe the device corresponding to the registration token to the
-        // topic.
-        admin.messaging().subscribeToTopic(registrationToken, topic)
-          .then(function(response) {
-            // See the MessagingTopicManagementResponse reference documentation
-            // for the contents of response.
-            console.log("Successfully subscribed to topic:", response);
-          })
-          .catch(function(error) {
-            console.log("Error subscribing to topic:", error);
-          })
       })
       .catch(function () {
         console.log('err')
-      })
+      })*/
 
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
