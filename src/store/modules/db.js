@@ -1,6 +1,7 @@
 const state = {
   db : {},
-  storgae : {}
+  storgae : {},
+  pushNot : ''
 }
 
 const getters = {
@@ -9,6 +10,9 @@ const getters = {
   },
   storage : state => {
     return state.storage
+  },
+  pushNot: state => {
+    return state.pushNot
   }
 }
 
