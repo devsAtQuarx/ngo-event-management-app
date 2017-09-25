@@ -1,9 +1,9 @@
-<template>
-  <div >
-    <v-layout row wrap justify-space-around class="events_layout pt-0">
+<template >
+  <div class="pa-0">
+    <!--v-layout row wrap justify-space-around class="events_layout pt-0">
    <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary  elevation-2 pt-0 ma-1">
         <v-card class="blue-grey darken-4 white--text pt-0 xs-only " >
-          <v-container fluid grid-list-lg style="">
+          <v-container fluid grid-list-lg  @click="goToSpecEvent(event, i)" style="cursor: pointer;">
             <v-layout row wrap>
               <v-flex xs7>
                 <div>
@@ -16,6 +16,9 @@
                 <br>
 
                 <div >
+                  <v-icon class="white--text icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
+                  <span>{{event.duration}}hrs</span>
+                  <v-spacer></v-spacer>
                   <v-icon class="white--text icon_font" >date_range</v-icon>
                   <span>{{event.date}}</span>
                   <v-spacer></v-spacer>
@@ -58,12 +61,12 @@
                </v-tabs-item>
 
 
-             <v-tabs-item class="pl-0 pr-0">
+             <v-tabs-item class="pl-0 pr-0"-->
                <!--v-dialog v-model="dialog" lazy absolute-->
-               <v-list-tile @click="checkIfMember(event,i)"  class="pl-0 pr-0">
+               <!--v-list-tile @click="checkIfMember(event,i)"  class="pl-0 pr-0">
                  <v-icon class="icon_font">fa-calendar-check-o</v-icon>
                </v-list-tile>
-               <span style="font-size:10px;margin-top:-15px">Join Event</span>
+               <span style="font-size:10px;margin-top:-15px">Join Event</span-->
                <!--v-card>
                  <v-card-title>
                    <div class="headline">Use Google's location service?</div>
@@ -76,7 +79,7 @@
                  </v-card-actions>
                </v-card>
              </v-dialog-->
-             </v-tabs-item>
+             <!--/v-tabs-item>
 
 
        </v-tabs-bar>
@@ -84,8 +87,43 @@
 
       </v-flex>
 
-    </v-layout >
+    </v-layout -->
+    <v-container  grid-list-lg text-xs-center style="padding:0px">
+    <v-layout  row wrap justify-space-between  >
+   <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
+     <v-card>
+       <v-card-media v-if="event.downloadUrl ==undefined" src="/static/img/icons/umangFoundation.jpg" height="200px">
+       </v-card-media>
+       <v-card-media v-else :src="event.downloadUrl[0]" height="200px">
+       </v-card-media>
+       <v-card-title primary-title>
+         <div>
+           <div class="headline mb-0">{{event.title}}</div>
+           <v-icon class="icon_font">location_on</v-icon>
+           <span>{{event.venue}}</span>
 
+         </div>
+         <v-spacer></v-spacer>
+         <div>
+           <v-icon class="icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
+           <span>{{event.duration}}hrs</span>
+
+           <v-icon class="icon_font" >date_range</v-icon>
+           <span>{{event.date}}</span>
+
+           <v-icon class="icon_font">access_time</v-icon>
+           <span>{{event.time}}</span>
+
+         </div>
+       </v-card-title>
+       <v-card-actions>
+         <v-btn flat class="orange--text">Share</v-btn>
+         <v-btn flat class="orange--text">Explore</v-btn>
+       </v-card-actions>
+     </v-card>
+   </v-flex>
+ </v-layout>
+</v-container>
 
     <infinite-loading
       v-if="eventsArr.length >= 3 && showLoader == true"
@@ -179,7 +217,7 @@ export default{
     //showEvents
     getEvents(){
         let vm = this
-        this.$store.state.db.db.ref('events/').limitToLast(3)
+        this.$store.state.db.db.ref('events/').limitToLast(6)
         .once('value',function(snapshot){
           vm.reverseFetchedEventsOrder(snapshot.val())
         })
@@ -237,14 +275,14 @@ export default{
     loadMoreEvents(){
       //console.log("loadMore")
       let vm = this
-      this.$store.state.events.count += 2
+      this.$store.state.events.count += 5
       //console.log(this.$store.state.events.count)
       if(vm.$store.state.events.eventsArr[this.$store.state.events.count]
           != undefined ){
         this.$store.state.db.db.ref('events/')
         .orderByKey()
         .endAt(vm.$store.state.events.eventsArr[this.$store.state.events.count].key)
-        .limitToLast(3)
+        .limitToLast(6)
         .once('value',function(snapshot){
           //console.log(snapshot.val())
           //
@@ -321,13 +359,10 @@ export default{
 .icon_font{
   font-size:19px
 }
-.events_layout{
- margin-top: -4.9vh !important;
-}
-
 
 main {
     padding-top: 0px !important;
 }
+
 
 </style>

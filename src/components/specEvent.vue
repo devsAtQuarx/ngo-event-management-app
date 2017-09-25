@@ -2,15 +2,19 @@
   <div>
 
   <v-layout row wrap justify-space-around>
+
     <v-flex xs12 md10 lg10>
+
       <v-card-media :src="specEventFromDb.downloadUrl[0]" height="30vh" v-if="specEventFromDb.downloadUrl != undefined">
       </v-card-media>
       <v-card-media src="/static/img/icons/umangFoundation.jpg" height="30vh" v-else>
+
       </v-card-media>
       <v-card-media class="main_image" height="30vh" >
         <v-layout column class="media">
 
           <v-card-title primary-title class="white--text">
+
             <div class="headline">{{specEventFromDb.title}}</div>
               <v-spacer></v-spacer>
             <v-bottom-sheet >
@@ -30,32 +34,48 @@
             </v-bottom-sheet>
           </v-card-title>
           <v-subheader>
-            <v-icon
-              class="pl-3 pt-4">
+            <v-btn dark icon disabled>
+            <v-icon class="pl-3 pt-4 white--text">
               location_on
-            </v-icon>
+            </v-icon></v-btn>
             <div
               class="white--text pl-0 pt-4">{{specEventFromDb.venue}}
             </div>
           </v-subheader>
-            <v-card-text class="white--text pl-4 pt-4">
-              <div>
-                <v-icon class="icon">list</v-icon>
+            <v-card-text  class="white--text pl-4 pt-4">
+              <div style="float:left">
+                <v-btn dark icon disabled>
+                <v-icon class="pl-3 pt-0 white--text">
+                  list</v-icon></v-btn>
+
                 <span>
                   {{specEventFromDb.category}}
                 </span>
               </div>
-              <br>
-              <br>
+              <div style="float:right">
+                <v-btn dark icon disabled>
+                <v-icon class="pl-3 pt-0 white--text" style="font-size:15px">
+                  fa-hourglass-half</v-icon></v-btn>
 
-              <div style="float:left">
-                <v-icon class="icon">date_range</v-icon>
+                <span>
+                  {{specEventFromDb.duration}} hrs
+                </span>
+              </div>
+              <br>
+              <br>
+              <br>
+              <div style="float:left;">
+                <v-btn dark icon disabled>
+                <v-icon class="pl-3 pt-0 white--text">
+                date_range</v-icon></v-btn>
                 <span>
                   {{specEventFromDb.date}}
                 </span>
               </div>
-              <div style="float:right">
-                <v-icon class="icon">access_time</v-icon>
+              <div style="float:right;">
+                <v-btn dark icon disabled>
+                <v-icon class="pl-3 pt-0 white--text">
+                access_time</v-icon></v-btn>
                 <span>
                   {{specEventFromDb.time}}
                 </span>
