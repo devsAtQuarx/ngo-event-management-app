@@ -2,8 +2,8 @@
   <div>
   <p class="text-xs-center ">  Your Membership No is </p>
   <br>
-    <p class="grey--text text-xs-center display-1"> {{showMembershipNo}}</p>
-    
+    <p class="grey--text text-xs-center" style="font-weight:bolder"> {{showMembershipNo}}</p>
+
     <v-btn
       small
        primary

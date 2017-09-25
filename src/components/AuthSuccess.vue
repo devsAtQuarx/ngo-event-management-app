@@ -1,14 +1,16 @@
 <template>
   <div>
-    <v-navigation-drawer
-      persistent
-      v-model="drawer"
-      light
-      enable-resize-watcher
-      absolute
-      class="grey lighten-4"
-      style="z-index:5"
-    >
+
+      <v-navigation-drawer
+        persistent
+        v-model="drawer"
+        light
+        enable-resize-watcher
+        overflow
+        class="grey lighten-4"
+        style="z-index:5"
+>
+
       <v-list dense class="grey lighten-4">
 
         <v-list-tile avatar @click="">
@@ -70,8 +72,8 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar class="red accent-3" style="z-index:4" dark fixed>
-       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    <v-toolbar class="white grey--text" style="z-index:4" dark fixed>
+       <v-toolbar-side-icon class="grey--text"@click.stop="drawer = !drawer"></v-toolbar-side-icon>
        <v-toolbar-title>Toolbar</v-toolbar-title>
      </v-toolbar>
 
