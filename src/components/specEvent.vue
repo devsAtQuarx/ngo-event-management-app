@@ -7,7 +7,7 @@
 
       <v-card-media :src="specEventFromDb.downloadUrl[0]" height="30vh" v-if="specEventFromDb.downloadUrl != undefined">
       </v-card-media>
-      <v-card-media src="/static/img/icons/umangFoundation.jpg" height="30vh" v-else>
+      <v-card-media v-else src="/static/img/icons/umangFoundation.jpg" height="30vh">
 
       </v-card-media>
       <v-card-media class="main_image" height="30vh" >
@@ -17,11 +17,58 @@
 
             <div class="headline">{{specEventFromDb.title}}</div>
               <v-spacer></v-spacer>
-            <v-bottom-sheet >
-              <v-btn dark icon slot="activator" class="mr-0">
+               <v-dialog v-model="dialog"  fullscreen transition="dialog-bottom-transition" >
+              <v-btn dark icon slot="activator" class="mr-0" @click="vm.$store.state.auth.drawer = false">
                 <v-icon>collections</v-icon>
               </v-btn>
-              <v-list style="overflow-y:scroll">
+
+
+              <v-card class="black show_image">
+
+                <v-btn fab top left fixed icon @click.native="dialog = false" @click="vm.$store.state.auth.drawer = true">
+                  <v-icon class="white--text">close</v-icon>
+                </v-btn>
+                <div class="white--text display-1 text-xs-center"v-if="specEventFromDb.downloadUrl == undefined">
+                  This Event Gallary Is Empty
+                </div>
+
+                  <v-layout justify-space-around v-else>
+
+                    <span style="align-self:center">
+                    <v-btn icon  @click="prev_image()"
+                     v-if="cnt > 0">
+                     <v-icon class="white--text display-3">keyboard_arrow_left
+                     </v-icon>
+                   </v-btn>
+                   <v-btn icon  @click=""
+                     v-else
+                     ><v-icon class="grey--text display-3">keyboard_arrow_left
+                     </v-icon>
+                 </v-btn>
+               </span>
+
+                  <div class="white--text"><img :src="specEventFromDb.downloadUrl[cnt]" class="gallary_image">
+                  
+                  </div>
+
+                  <span style="align-self:center">
+                  <v-btn icon  @click="next_image()"
+                    v-if="cnt < specEventFromDb.downloadUrl.length-1"
+                    ><v-icon class="white--text display-3">keyboard_arrow_right
+                    </v-icon>
+                </v-btn>
+                <v-btn icon  @click=""
+                  v-else
+                  ><v-icon class="grey--text display-3">keyboard_arrow_right
+                  </v-icon>
+              </v-btn>
+              </span>
+
+              </v-layout>
+
+              </v-card>
+
+              <!--v-list style="overflow-x:scroll">
                 <div style="margin-left:5vh">Event Gallary</div>
                 <v-list-tile v-if="specEventFromDb.downloadUrl == undefined">This Event Gallary Is Empty
                 </v-list-tile>
@@ -30,8 +77,8 @@
                   <img :src="i" class="gallary_image">
                 </span>
 
-              </v-list>
-            </v-bottom-sheet>
+              </v-list-->
+            </v-dialog>
           </v-card-title>
           <v-subheader>
             <v-btn dark icon disabled>
@@ -42,7 +89,7 @@
               class="white--text pl-0 pt-4">{{specEventFromDb.venue}}
             </div>
           </v-subheader>
-            <v-card-text  class="white--text pl-4 pt-4">
+            <v-card-text  class="white--text pl-0 pt-4">
               <div style="float:left">
                 <v-btn dark icon disabled>
                 <v-icon class="pl-3 pt-0 white--text">
@@ -66,7 +113,7 @@
               <br>
               <div style="float:left;">
                 <v-btn dark icon disabled>
-                <v-icon class="pl-3 pt-0 white--text">
+                <v-icon class="pl-3 pt-0 pb-2 white--text">
                 date_range</v-icon></v-btn>
                 <span>
                   {{specEventFromDb.date}}
@@ -74,7 +121,7 @@
               </div>
               <div style="float:right;">
                 <v-btn dark icon disabled>
-                <v-icon class="pl-3 pt-0 white--text">
+                <v-icon class="pl-3 pt-0 pb-2 white--text">
                 access_time</v-icon></v-btn>
                 <span>
                   {{specEventFromDb.time}}
@@ -176,11 +223,23 @@ import {mapGetters} from 'vuex'
 export default{
   data(){
     return {
+      vm:this,
+      dialog: false,
+      cnt:0,
       specEventFromDb: {}
     }
   },
   //methods
   methods:{
+    prev_image(){
+
+        this.cnt--
+
+    },
+    next_image(){
+        this.cnt++
+
+    },
     getSpecEvent(){
       let vm = this
       this.$store.state.db.db.ref('events/' + this.$route.params.id)
@@ -189,14 +248,17 @@ export default{
         vm.specEventFromDb = snapshot.val()
       })
     }
+
   },
   //computed
   computed:{
     ...mapGetters([
+      'drawer'
     ])
   },
   beforeMount(){
-    this.getSpecEvent()
+    this.getSpecEvent(),
+    this.vm
   }
 }
 </script>
@@ -216,11 +278,12 @@ export default{
     background: #fff;
     height: 400px;
 }
-  .gallary_image{
-    padding: 2vh;
-    height:50vh;
-    width:53vh;
-  }
+.show_image{
+  height: auto;
+align-items: center;
+display: flex;
+}
+
   .main_image_card{
     padding: 16px;
     width: 80%;
@@ -242,6 +305,11 @@ export default{
     width: 100%;
     height: 30vh;
 }
+.gallary_image{
+  max-height: 500px;
+  max-width:100%;
+}
+
   .headline{
     font-size: 24px!important;
     font-weight: 400!important;

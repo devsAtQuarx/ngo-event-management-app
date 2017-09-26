@@ -18,5 +18,6 @@ export const store = new Vuex.Store({
 
     membershipForm,
     joinedEvent
+
   }
 })
