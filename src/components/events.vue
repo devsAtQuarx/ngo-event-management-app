@@ -1,95 +1,8 @@
 <template >
   <div class="pa-0">
-    <!--v-layout row wrap justify-space-around class="events_layout pt-0">
-   <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary  elevation-2 pt-0 ma-1">
-        <v-card class="blue-grey darken-4 white--text pt-0 xs-only " >
-          <v-container fluid grid-list-lg  @click="goToSpecEvent(event, i)" style="cursor: pointer;">
-            <v-layout row wrap>
-              <v-flex xs7>
-                <div>
-                  <div class="headline">{{event.title}}</div>
-                  <v-icon class="white--text icon_font">location_on</v-icon>
-                  <span>{{event.venue}}</span>
 
-
-                </div>
-                <br>
-
-                <div >
-                  <v-icon class="white--text icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
-                  <span>{{event.duration}}hrs</span>
-                  <v-spacer></v-spacer>
-                  <v-icon class="white--text icon_font" >date_range</v-icon>
-                  <span>{{event.date}}</span>
-                  <v-spacer></v-spacer>
-                  <v-icon class="white--text icon_font">access_time</v-icon>
-                  <span>{{event.time}}</span>
-
-                </div>
-
-              </v-flex>
-              <v-flex xs5>
-                 <v-card-media
-                    src="/static/img/icons/umangFoundation.jpg"
-                    height="125px"
-                    contain
-                    v-if="event.downloadUrl ==undefined"
-                  ></v-card-media>
-
-                  <v-card-media
-                     :src="event.downloadUrl[0]"
-                     height="125px"
-                     contain
-                     v-else
-                   ></v-card-media>
-
-
-              </v-flex>
-            </v-layout>
-          </v-container>
-
-        </v-card>
-        <v-tabs dark grow icons>
-         <v-tabs-bar class="cyan" style="height:55px">
-
-
-               <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
-                 <v-list-tile @click="goToSpecEvent(event, i)" class="pl-0 pr-0">
-                   <v-icon class="icon_font">fa-list-alt</v-icon>
-                 </v-list-tile>
-                 <span style="font-size:10px;margin-top:-15px">See Details</span>
-               </v-tabs-item>
-
-
-             <v-tabs-item class="pl-0 pr-0"-->
-               <!--v-dialog v-model="dialog" lazy absolute-->
-               <!--v-list-tile @click="checkIfMember(event,i)"  class="pl-0 pr-0">
-                 <v-icon class="icon_font">fa-calendar-check-o</v-icon>
-               </v-list-tile>
-               <span style="font-size:10px;margin-top:-15px">Join Event</span-->
-               <!--v-card>
-                 <v-card-title>
-                   <div class="headline">Use Google's location service?</div>
-                 </v-card-title>
-                 <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
-                 <v-card-actions>
-                   <v-spacer></v-spacer>
-                   <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
-                   <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Agree</v-btn>
-                 </v-card-actions>
-               </v-card>
-             </v-dialog-->
-             <!--/v-tabs-item>
-
-
-       </v-tabs-bar>
-     </v-tabs>
-
-      </v-flex>
-
-    </v-layout -->
     <v-container  grid-list-lg text-xs-center style="padding:0px">
-    <v-layout  row wrap justify-space-between  >
+    <v-layout  row wrap justify-space-around  >
    <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
      <v-card>
        <v-card-media v-if="event.downloadUrl ==undefined" src="/static/img/icons/umangFoundation.jpg" height="200px">
@@ -100,25 +13,32 @@
          <div>
            <div class="headline mb-0">{{event.title}}</div>
            <v-icon class="icon_font">location_on</v-icon>
-           <span>{{event.venue}}</span>
-
+           <span v-for="i in event.venue.length" v-show="i < 25" class="grey--text">{{event.venue[i-1]}}</span>
+           <span v-show="event.venue.length > 25" class="grey--text">...</span>
          </div>
-         <v-spacer></v-spacer>
-         <div>
-           <v-icon class="icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
-           <span>{{event.duration}}hrs</span>
 
-           <v-icon class="icon_font" >date_range</v-icon>
-           <span>{{event.date}}</span>
 
-           <v-icon class="icon_font">access_time</v-icon>
-           <span>{{event.time}}</span>
 
-         </div>
        </v-card-title>
-       <v-card-actions>
-         <v-btn flat class="orange--text">Share</v-btn>
-         <v-btn flat class="orange--text">Explore</v-btn>
+       <div>
+         <span style="float:left" class="pl-3">
+             <v-icon class="icon_font" >access_time</v-icon>
+             <span class="grey--text">{{event.time}}</span>
+        </span>
+
+        <span>
+         <v-icon class="icon_font" >date_range</v-icon>
+         <span class="grey--text">{{event.date}}</span>
+       </span>
+       <span style="float:right" class="pr-3">
+         <v-icon class="icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
+         <span class="grey--text">{{event.duration}}hrs</span>
+       </span>
+       </div>
+       <v-card-actions class="pr-1">
+         <v-spacer></v-spacer>
+         <v-btn flat icon class="grey--text" @click="goToSpecEvent(event, i)"><v-icon>fa-list-alt</v-icon></v-btn>
+         <v-btn flat icon class="grey--text" @click="checkIfMember(event,i)" ><v-icon>fa-calendar-check-o</v-icon></v-btn>
        </v-card-actions>
      </v-card>
    </v-flex>

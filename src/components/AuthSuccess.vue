@@ -3,12 +3,13 @@
 
       <v-navigation-drawer
         persistent
-        v-model="drawer"
+        v-model="vm.$store.state.auth.drawer"
         light
         enable-resize-watcher
         overflow
         class="grey lighten-4"
         style="z-index:5"
+
 >
 
       <v-list dense class="grey lighten-4">
@@ -58,6 +59,14 @@
              <v-list-tile-title>Attendance</v-list-tile-title>
            </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile @click="goToAboutUsPage">
+           <v-list-tile-action>
+             <v-icon style="font-size:20px">fa-book</v-icon>
+           </v-list-tile-action>
+           <v-list-tile-content>
+             <v-list-tile-title>About Us</v-list-tile-title>
+           </v-list-tile-content>
+          </v-list-tile>
           <v-list-tile @click="logOut">
            <v-list-tile-action>
              <v-icon style="font-size:20px">fa-sign-out</v-icon>
@@ -73,7 +82,8 @@
     </v-navigation-drawer>
 
     <v-toolbar class="white grey--text" style="z-index:4" dark fixed>
-       <v-toolbar-side-icon class="grey--text"@click.stop="drawer = !drawer"></v-toolbar-side-icon>
+       <v-toolbar-side-icon class="grey--text" @click.stop="vm.$store.state.auth.drawer = !vm.$store.state.auth.drawer"></v-toolbar-side-icon>
+
        <v-toolbar-title>Toolbar</v-toolbar-title>
      </v-toolbar>
 
@@ -95,7 +105,8 @@ export default {
   //
   data(){
      return {
-        drawer: true
+       vm:this,
+       drawer:true
      }
    },
 
@@ -106,7 +117,9 @@ export default {
 
   //
   methods: {
-
+    goToAboutUsPage(){
+      this.$router.push('/aboutUs')
+    },
     goToMyEvents(){
       this.$router.push('/myEvents')
     },
@@ -143,8 +156,11 @@ export default {
   //
   computed:{
     ...mapGetters([
-      'user'
+      'user','fullscreenDialog'
     ])
+  },
+  beforeMount(){
+    this.vm
   }
 };
 </script>
