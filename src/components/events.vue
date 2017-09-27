@@ -107,6 +107,11 @@ export default{
       //check if already joined -> for which event are showing on screen
       //here !
 
+      let vm = this
+
+      this.$store.state.db.db.ref('eventToken/' + event.key + '/' + this.$store.state.auth.token)
+        .set(vm.$store.state.auth.user.uid)
+
       let tmpUserDetail = {
         uid:this.$store.state.auth.user.uid,
         name:this.$store.state.auth.user.displayName

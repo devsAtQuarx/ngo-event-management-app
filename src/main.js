@@ -26,19 +26,6 @@ new Vue({
     store.state.db.db = firebaseApp.database()
     store.state.db.storage = firebase.storage()
 
-    /*const messaging = firebase.messaging()
-    messaging.requestPermission()
-      .then(function () {
-        console.log('have permission')
-        return messaging.getToken()
-      })
-      .then(function (token) {
-        console.log(token)
-      })
-      .catch(function () {
-        console.log('err')
-      })*/
-
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
 
@@ -65,6 +52,29 @@ new Vue({
               store.state.db.db.ref('checkAuthDetail/' + user.uid)
                 .set(tmpUserObj)
             }
+
+            //firebase messaging
+            const messaging = firebase.messaging()
+            messaging.requestPermission()
+              .then(function () {
+                console.log('have permission')
+                return messaging.getToken()
+              })
+              .then(function (token) {
+                console.log(token)
+                store.state.auth.token = token
+
+                store.state.db.db.ref('tokens/' + token)
+                  .set(user.uid)
+                store.state.db.db.ref('checkTokens/' + user.uid)
+                  .push(token)
+
+              })
+              .catch(function () {
+                console.log('err')
+              })
+            //
+
           })
 
       }else {
