@@ -1,6 +1,7 @@
 const state = {
   user : {},
-  token : ''
+  token : '',
+  drawer:true
 }
 
 const getters = {
@@ -9,6 +10,9 @@ const getters = {
   },
   token : state => {
     return state.token
+  },
+  drawer : drawer => {
+    return state.drawer
   }
 }
 
