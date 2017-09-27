@@ -59,6 +59,14 @@
              <v-list-tile-title>Attendance</v-list-tile-title>
            </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile @click="goToContact">
+            <v-list-tile-action>
+              <v-icon style="font-size:20px">fa-sign-out</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>contact</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
           <v-list-tile @click="goToAboutUsPage">
            <v-list-tile-action>
              <v-icon style="font-size:20px">fa-book</v-icon>
@@ -136,19 +144,30 @@ export default {
       this.$router.push('/eventAttendance')
     },
 
+    goToContact(){
+      this.$router.push('/contact')
+    },
+
     goToMembershipForm(){
       // if already a member & member ship no is generated just show in popup
       //or routte to a page to show membership no/or change detail
-      let vm = this
-      this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
-        .once('value',function(snapshot){
-          console.log(snapshot.val())
-          if(snapshot.val() == null){
-            vm.$router.push('/membershipForm')
-          }else{
-            vm.$router.push('/membershipForm/lastPage')
-          }
-        })
+
+      console.log(this.$store.state.auth.user.emailVerified)
+      if(this.$store.state.auth.user.emailVerified == true) {
+
+        let vm = this
+        this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+          .once('value', function (snapshot) {
+            console.log(snapshot.val())
+            if (snapshot.val() == null) {
+              vm.$router.push('/membershipForm')
+            } else {
+              vm.$router.push('/membershipForm/lastPage')
+            }
+          })
+      }else{
+        window.alert('verify email first !')
+      }
 
     }
   },

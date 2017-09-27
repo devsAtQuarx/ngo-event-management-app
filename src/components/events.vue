@@ -128,6 +128,8 @@ export default{
 
     checkIfMember(event,i){
       let vm = this
+
+
       this.$store.state.db.db.ref('membershipDetail/'+this.$store.state.auth.user.uid)
         .once('value',function(snapshot){
           console.log('memberShip',snapshot.val())
@@ -140,12 +142,15 @@ export default{
 
 
                 if(snapshot2.val() != null){
+
                   //not turn on
                   vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
                     .set(vm.$store.state.auth.user.uid)
 
 
                   //already joined => toast or popup
+
+            
                   vm.text="You've Joined this event Already"
                 }else{
                   //vm.joinEvent(event,i)
@@ -155,10 +160,12 @@ export default{
           }else{
               console.log("not a member")
            vm.text="Please fill the membership form to join event"
+
             //not a member =>
             //dialog or toast or redirect whatever !
           }
         })
+
     },
 
 
