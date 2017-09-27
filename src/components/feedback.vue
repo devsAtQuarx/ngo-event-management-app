@@ -6,10 +6,11 @@
         label="Feedback"
         v-model="feedback"
         textarea
+        class="pl-2 pr-2"
       ></v-text-field>
       <v-btn
         small
-         primary
+         grey
          dark
          right
          bottom
@@ -21,7 +22,7 @@
        </v-btn>
 
     </span>
-    <div v-else>
+    <div v-else class="pl-3 pr-3">
     <p class="grey--text display-1 text-xs-center">You've submitted your feedback</p>
     <p  class="grey--text">
       {{showFeedback}}

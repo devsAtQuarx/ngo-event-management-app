@@ -37,8 +37,8 @@
        </div>
        <v-card-actions class="pr-1">
          <v-spacer></v-spacer>
-         <v-btn flat icon class="grey--text" @click="goToSpecEvent(event, i)"><v-icon>fa-list-alt</v-icon></v-btn>
-         <v-btn flat icon class="grey--text" @click="checkIfMember(event,i)" ><v-icon>fa-calendar-check-o</v-icon></v-btn>
+         <v-btn flat icon class="grey--text" @click="goToSpecEvent(event, i)" v-tooltip:top="{ html: 'See Detail' }"><v-icon>fa-list-alt</v-icon></v-btn>
+         <v-btn flat icon class="grey--text" @click="checkIfMember(event,i)" v-tooltip:top="{ html: 'Join Event' }"><v-icon>fa-calendar-check-o</v-icon></v-btn>
        </v-card-actions>
      </v-card>
    </v-flex>
