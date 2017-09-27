@@ -15,6 +15,7 @@
            <v-icon class="icon_font">location_on</v-icon>
            <span v-for="i in event.venue.length" v-show="i < 25" class="grey--text">{{event.venue[i-1]}}</span>
            <span v-show="event.venue.length > 25" class="grey--text">...</span>
+           <button @click="notSwitch(event,i)">bell</button>
          </div>
 
 
@@ -90,6 +91,10 @@ export default{
               .once('value',function (snapshot2) {
                 console.log('already joined',snapshot2.val())
                 if(snapshot2.val() != null){
+                  //not turn on
+                  vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
+                    .set(vm.$store.state.auth.user.uid)
+
                   //already joined => toast or popup
                 }else{
                   vm.joinEvent(event,i)
@@ -102,13 +107,35 @@ export default{
         })
     },
 
+
+    //notSwitch
+    notSwitch(event, i){
+      let vm = this
+      //not
+      this.$store.state.db.db.ref('eventToken/' + event.key + '/' + this.$store.state.auth.token)
+        .once('value',function(notStatus){
+          if(notStatus.val() == null){
+            //not turn on
+            vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
+              .set(vm.$store.state.auth.user.uid)
+          }else{
+            //turn off not
+            //not turn on
+            vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
+              .remove()
+          }
+        })
+    },
+
     //joinEvent
     joinEvent(event,i){
-      //check if already joined -> for which event are showing on screen
-      //here !
 
       let vm = this
 
+      //check if already joined -> for which event are showing on screen
+      //here !
+
+      //not turn on
       this.$store.state.db.db.ref('eventToken/' + event.key + '/' + this.$store.state.auth.token)
         .set(vm.$store.state.auth.user.uid)
 
