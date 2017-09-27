@@ -31,6 +31,7 @@ new Vue({
 
         //this.$router.push('/success')
         store.state.auth.user = user
+        console.log(user)
 
         let tmpUserObj = {
           uid : user.uid,
@@ -39,6 +40,31 @@ new Vue({
           email : user.email
         }
 
+        //check if user is logging for 1st time
+        store.state.db.db.ref('checkAuthDetail/' + user.uid).once('value',function (checkUserSnap) {
+          if(checkUserSnap.val() == null){
+            //not present 1st time //send verfication mail
+
+            if(user.providerData[0].providerId == 'password'){
+              console.log('ok pswd')
+              var actionCodeSettings = {
+                url: 'https://umang-foundation.firebaseapp.com/?email=' + user.email,
+                //handleCodeInApp: true
+              };
+              firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
+                .then(function() {
+                  console.log('ver email sent !') // Verification email sent.
+                })
+                .catch(function(error) {
+                  // Error occurred. Inspect error.code.
+                  console.log('ver email not sent !', error)
+                });
+
+            }
+          }
+        })
+
+        console.log(user.providerData[0].providerId)
 
         store.state.db.db.ref('checkAuthDetail/' + user.uid)
           .once('value',function (snapshot) {

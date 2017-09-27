@@ -32,6 +32,37 @@ exports.sendNotification = functions.database.ref('nots/') //tokens
 
   })
 
+const nodemailer = require('nodemailer');
+const gmailEmail = encodeURIComponent(functions.config().gmail.email);
+const gmailPassword = encodeURIComponent(functions.config().gmail.password);
+const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
+
+exports.sendContactMessage = functions.database.ref('contactUsMail/').onWrite(event => {
+  var mail = event.data.val()
+
+  var uid = Object.keys(mail)
+  uid = uid[0]
+
+  const mailOptions = {
+    to: 'umangfoundadm@gmail.com',
+    subject:  mail[uid].sub,
+    html :
+          "<p>" + "Name : " + mail[uid].name + "</p>"+
+          "<p>"+ "Email: " + mail[uid].email +"</p>" +
+          "<p>"+ "Phone No: " + mail[uid].ph +"</p>" +
+          "<p>" + "Description(Query): " + mail[uid].desc + "</p>"+
+          "<p> --- Login Details --- </p>" +
+          "<p>"+ "Logged By Name: " + mail[uid].loginName +"</p>" +
+          "<p>"+ "Logged By Email: " +mail[uid].loginEmail +"</p>" +
+          "<p>"+ "Logged By UID: "+ uid +"</p>"
+
+  };
+
+  return mailTransport.sendMail(mailOptions).then(() => {
+    return console.log('Mail sent to: umangfoundadm@gmail.com')
+  });
+});
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

@@ -81,30 +81,32 @@ export default{
 
     checkIfMember(event,i){
       let vm = this
-      this.$store.state.db.db.ref('membershipDetail/'+this.$store.state.auth.user.uid)
-        .once('value',function(snapshot){
-          console.log('memberShip',snapshot.val())
-          if(snapshot.val != null){
+
+      this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+        .once('value', function (snapshot) {
+          console.log('memberShip', snapshot.val())
+          if (snapshot.val() != null) {
             //cehck if already joined
             vm.$store.state.db.db.ref('joinedEvent/' + vm.$store.state.auth.user.uid)
               .orderByChild("eventKey").equalTo(event.key)
-              .once('value',function (snapshot2) {
-                console.log('already joined',snapshot2.val())
-                if(snapshot2.val() != null){
+              .once('value', function (snapshot2) {
+                console.log('already joined', snapshot2.val())
+                if (snapshot2.val() != null) {
                   //not turn on
                   vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
                     .set(vm.$store.state.auth.user.uid)
 
                   //already joined => toast or popup
-                }else{
-                  vm.joinEvent(event,i)
+                } else {
+                  vm.joinEvent(event, i)
                 }
               })
-          }else{
+          } else {
             //not a member =>
             //dialog or toast or redirect whatever !
           }
         })
+
     },
 
 
