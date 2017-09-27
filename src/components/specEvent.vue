@@ -1,11 +1,15 @@
-<template>
-  <div>
+<template >
+  <div >
 
-  <v-layout row wrap justify-space-around>
+    <div class="preload" v-show="this.loader2== true"></div>
+
+<div v-show="this.loader2 == false" >
+   <v-layout row wrap justify-space-around >
 
     <v-flex xs12 md10 lg10>
 
-      <v-card-media :src="specEventFromDb.downloadUrl[0]" height="300px" v-if="specEventFromDb.downloadUrl != undefined">
+      <v-card-media :src="specEventFromDb.downloadUrl[0]" height="300px"
+      v-if="specEventFromDb.downloadUrl != undefined">
       </v-card-media>
       <v-card-media v-else src="/static/img/icons/umangFoundation.jpg" height="300px">
 
@@ -70,16 +74,6 @@
 
               </v-card>
 
-              <!--v-list style="overflow-x:scroll">
-                <div style="margin-left:5vh">Event Gallary</div>
-                <v-list-tile v-if="specEventFromDb.downloadUrl == undefined">This Event Gallary Is Empty
-                </v-list-tile>
-
-                <span v-else v-for="i in specEventFromDb.downloadUrl" style="height:375px;" >
-                  <img :src="i" class="gallary_image">
-                </span>
-
-              </v-list-->
             </v-dialog>
           </v-card-title>
           <v-subheader>
@@ -215,7 +209,8 @@
 
 
     </v-flex>
-  </v-layout>
+   </v-layout>
+</div>
 
   </div>
 </template>
@@ -230,7 +225,9 @@ export default{
       dialog: false,
       cnt:0,
       loader:false,
+      loader2:false,
       specEventFromDb: {}
+
     }
   },
   //methods
@@ -252,7 +249,12 @@ export default{
 
 
     },
-
+    loaded2 () {
+      if(this.specEventFromDb.downloadUrl != '')
+        {
+          setTimeout(() => (this.loader2 = false), 3000)
+        }
+    },
     getSpecEvent(){
       let vm = this
       this.$store.state.db.db.ref('events/' + this.$route.params.id)
@@ -269,10 +271,20 @@ export default{
       'drawer'
     ])
   },
+
+
   beforeMount(){
     this.getSpecEvent(),
-    this.vm
-  }
+    this.vm,
+    this.loader2=true
+   console.log(this.loader2)
+   this.loaded2()
+  },
+  beforeUpdate(){
+    this.loader2=false
+    console.log(this.loader2)
+  },
+
 }
 </script>
 <style scoped>
