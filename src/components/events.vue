@@ -5,31 +5,44 @@
     <v-layout  row wrap justify-space-around  >
    <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
      <v-card>
-       <v-card-media v-if="event.downloadUrl ==undefined" src="/static/img/icons/umangFoundation.jpg" height="200px">
+       <v-card-media v-if="event.downloadUrl ==undefined" src="/static/img/icons/umangFoundation.jpg"
+       @click="goToSpecEvent(event, i)"
+       style="cursor:pointer"
+       height="200px">
        </v-card-media>
-       <v-card-media v-else :src="event.downloadUrl[0]" height="200px">
+       <v-card-media v-else :src="event.downloadUrl[0]" height="200px" 
+       style="cursor:pointer"
+        @click="goToSpecEvent(event, i)">
        </v-card-media>
        <v-card-title primary-title>
-         <div>
-           <div class="headline mb-0">{{event.title}}</div>
-           <v-icon class="icon_font">location_on</v-icon>
-           <span v-for="i in event.venue.length" v-show="i < 25" class="grey--text">{{event.venue[i-1]}}</span>
-           <span v-show="event.venue.length > 25" class="grey--text">...</span>
-           <button @click="notSwitch(event,i)">bell</button>
+
+           <div style="width:-webkit-fill-available">
+                <v-btn icon style="float:right;" @click="notSwitch(event,i)"
+                @click.native="snackbar = true"
+                ><v-icon >notifications</v-icon></v-btn>
+
+               <div class="headline mb-0" style="float:left">{{event.title}}</div>
          </div>
 
 
+         <div>
+         <v-icon class="icon_font">location_on</v-icon>
+         <span v-for="i in event.venue.length" v-show="i < 25" class="grey--text">{{event.venue[i-1]}}</span>
+         <span v-show="event.venue.length > 25" class="grey--text">...</span>
+         </div>
+
 
        </v-card-title>
+
        <div>
          <span style="float:left" class="pl-3">
-             <v-icon class="icon_font" >access_time</v-icon>
-             <span class="grey--text">{{event.time}}</span>
+             <v-icon class="icon_font" >date_range</v-icon>
+             <span class="grey--text">{{event.date}}</span>
         </span>
 
         <span>
-         <v-icon class="icon_font" >date_range</v-icon>
-         <span class="grey--text">{{event.date}}</span>
+         <v-icon class="icon_font" >access_time</v-icon>
+         <span class="grey--text">{{event.time}}</span>
        </span>
        <span style="float:right" class="pr-3">
          <v-icon class="icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
@@ -38,8 +51,36 @@
        </div>
        <v-card-actions class="pr-1">
          <v-spacer></v-spacer>
-         <v-btn flat icon class="grey--text" @click="goToSpecEvent(event, i)" v-tooltip:top="{ html: 'See Detail' }"><v-icon>fa-list-alt</v-icon></v-btn>
-         <v-btn flat icon class="grey--text" @click="checkIfMember(event,i)" v-tooltip:top="{ html: 'Join Event' }"><v-icon>fa-calendar-check-o</v-icon></v-btn>
+         <v-btn flat round outline class="grey--text" @click="goToSpecEvent(event, i)"
+          style="font-size:10px">
+          <v-icon style="font-size:17px" class="mr-1">fa-list-alt</v-icon>
+
+          <span >See Detail</span>
+         </v-btn>
+
+         <v-btn flat round outline class="grey--text" @click="checkIfMember(event,i)"
+         @click.native="snackbar = true"
+        style="font-size:10px">
+         <v-icon style="font-size:17px" class="mr-1">fa-calendar-check-o</v-icon>
+          <span >Join Event</span>
+       </v-btn>
+     </v-card-text>
+     <v-snackbar
+           :timeout="timeout"
+           :success="context === 'success'"
+           :info="context === 'info'"
+           :warning="context === 'warning'"
+           :error="context === 'error'"
+           :primary="context === 'primary'"
+           :secondary="context === 'secondary'"
+           :multi-line="mode === 'multi-line'"
+           :vertical="mode === 'vertical'"
+           v-model="snackbar"
+         >
+           {{ text }}
+           <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+         </v-snackbar>
+
        </v-card-actions>
      </v-card>
    </v-flex>
@@ -72,6 +113,12 @@ export default{
   //data
   data(){
     return{
+      snackbar: false,
+      context: '',
+      mode: '',
+      timeout: 3000,
+      text:'',
+      notification:false,
       dialog: false
     }
   },
@@ -84,23 +131,30 @@ export default{
       this.$store.state.db.db.ref('membershipDetail/'+this.$store.state.auth.user.uid)
         .once('value',function(snapshot){
           console.log('memberShip',snapshot.val())
-          if(snapshot.val != null){
+          if(snapshot.val() != null){
             //cehck if already joined
             vm.$store.state.db.db.ref('joinedEvent/' + vm.$store.state.auth.user.uid)
               .orderByChild("eventKey").equalTo(event.key)
               .once('value',function (snapshot2) {
                 console.log('already joined',snapshot2.val())
+
+
                 if(snapshot2.val() != null){
                   //not turn on
                   vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
                     .set(vm.$store.state.auth.user.uid)
 
+
                   //already joined => toast or popup
+                  vm.text="You've Joined this event Already"
                 }else{
-                  vm.joinEvent(event,i)
+                  //vm.joinEvent(event,i)
+                  vm.text="You Joined this event"
                 }
               })
           }else{
+              console.log("not a member")
+           vm.text="Please fill the membership form to join event"
             //not a member =>
             //dialog or toast or redirect whatever !
           }
@@ -116,11 +170,17 @@ export default{
         .once('value',function(notStatus){
           if(notStatus.val() == null){
             //not turn on
+            vm.notification=true
+            console.log(vm.notification)
+            vm.text="notifications turned on"
             vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
               .set(vm.$store.state.auth.user.uid)
           }else{
             //turn off not
             //not turn on
+            vm.notification=false
+            console.log(vm.notification)
+            vm.text="notifications turned off"
             vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
               .remove()
           }
@@ -157,7 +217,7 @@ export default{
 
       this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid)
         .push(tmpObj)
-
+        vm.text="you joined this event"
         //toast joined
     },
 

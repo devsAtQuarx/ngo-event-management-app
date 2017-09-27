@@ -57,7 +57,7 @@
     </v-layout>
     <v-btn
       small
-       primary
+       grey
        dark
        right
        bottom
@@ -68,7 +68,7 @@
        >Next
      </v-btn>
 
-    
+
 
   </div>
 </template>

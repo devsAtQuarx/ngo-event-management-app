@@ -2,7 +2,7 @@
   <div>
     <v-form >
 
-    <v-layout row wrap justify-space-around>
+    <v-layout row wrap justify-space-around class="text-xs-center grey--text">
       Umang Foundation - Membership Form
       Thanks for your interest in Umang Foundation!!!
       To know more about Umang Foundation, please visit www.umangfoundation.org
@@ -152,7 +152,7 @@
 
     <v-btn
       small
-       primary
+       grey
        dark
        right
        bottom

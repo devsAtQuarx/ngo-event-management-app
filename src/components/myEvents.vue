@@ -13,7 +13,7 @@
       <div class="grey--text">{{event.title}}</div>
       <v-divider style="margin-left:10px"></v-divider>
         <v-btn outline fab small class=" grey--text" @click="eventDetail(event)" v-tooltip:top="{ html: 'See Details' }">
-          <v-icon style="font-size:14px">fa-list</v-icon>
+          <v-icon style="font-size:14px">fa-list-alt</v-icon>
         </v-btn>
          <v-btn outline fab small class=" grey--text" @click="addFeedback(event)" v-tooltip:top="{ html: 'Feedback' }">
            <v-icon style="font-size:18px">fa-pencil-square-o</v-icon>
