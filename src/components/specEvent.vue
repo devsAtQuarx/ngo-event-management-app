@@ -1,16 +1,20 @@
-<template>
-  <div>
+<template >
+  <div >
 
-  <v-layout row wrap justify-space-around>
+    <div class="preload" v-show="this.loader2== true"></div>
+
+<div v-show="this.loader2 == false" >
+   <v-layout row wrap justify-space-around >
 
     <v-flex xs12 md10 lg10>
 
-      <v-card-media :src="specEventFromDb.downloadUrl[0]" height="30vh" v-if="specEventFromDb.downloadUrl != undefined">
+      <v-card-media :src="specEventFromDb.downloadUrl[0]" height="300px"
+      v-if="specEventFromDb.downloadUrl != undefined">
       </v-card-media>
-      <v-card-media v-else src="/static/img/icons/umangFoundation.jpg" height="30vh">
+      <v-card-media v-else src="/static/img/icons/umangFoundation.jpg" height="300px">
 
       </v-card-media>
-      <v-card-media class="main_image" height="30vh" >
+      <v-card-media class="main_image" height="300px" >
         <v-layout column class="media">
 
           <v-card-title primary-title class="white--text">
@@ -33,8 +37,9 @@
                 </div>
 
                   <v-layout justify-space-around v-else>
+                    <div class="preload" v-if="this.loader== true"></div>
 
-                    <span style="align-self:center">
+                    <span style="align-self:center" v-show="this.loader== false">
                     <v-btn icon  @click="prev_image()"
                      v-if="cnt > 0">
                      <v-icon class="white--text display-3">keyboard_arrow_left
@@ -47,11 +52,12 @@
                  </v-btn>
                </span>
 
-                  <div class="white--text"><img :src="specEventFromDb.downloadUrl[cnt]" class="gallary_image">
-                  
+                  <div class="white--text" >
+                    <img :src="specEventFromDb.downloadUrl[cnt]" class="gallary_image" v-show="this.loader== false"
+                    @load="loaded()"></img>
                   </div>
 
-                  <span style="align-self:center">
+                  <span style="align-self:center" v-show="this.loader== false">
                   <v-btn icon  @click="next_image()"
                     v-if="cnt < specEventFromDb.downloadUrl.length-1"
                     ><v-icon class="white--text display-3">keyboard_arrow_right
@@ -68,16 +74,6 @@
 
               </v-card>
 
-              <!--v-list style="overflow-x:scroll">
-                <div style="margin-left:5vh">Event Gallary</div>
-                <v-list-tile v-if="specEventFromDb.downloadUrl == undefined">This Event Gallary Is Empty
-                </v-list-tile>
-
-                <span v-else v-for="i in specEventFromDb.downloadUrl" style="height:375px;" >
-                  <img :src="i" class="gallary_image">
-                </span>
-
-              </v-list-->
             </v-dialog>
           </v-card-title>
           <v-subheader>
@@ -111,7 +107,7 @@
               <br>
               <br>
               <br>
-              <div style="float:left;">
+              <div style="float:left;padding-top:78px">
                 <v-btn dark icon disabled>
                 <v-icon class="pl-3 pt-0 pb-2 white--text">
                 date_range</v-icon></v-btn>
@@ -119,7 +115,7 @@
                   {{specEventFromDb.date}}
                 </span>
               </div>
-              <div style="float:right;">
+              <div style="float:right;padding-top:78px">
                 <v-btn dark icon disabled>
                 <v-icon class="pl-3 pt-0 pb-2 white--text">
                 access_time</v-icon></v-btn>
@@ -130,7 +126,8 @@
           </v-card-text>
         </v-layout>
       </v-card-media>
-      <v-card-text>{{specEventFromDb.description}}</v-card-text>
+      <v-card-text v-if="specEventFromDb.description != ''">{{specEventFromDb.description}}</v-card-text>
+      <v-card-text v-else class="display-1 grey--text text-xs-center">There's no Description given about this Event</v-card-text>
       <div id="iconLinks">
         <a :href="specEventFromDb.facebookLink"
         v-if="specEventFromDb.facebookLink!=''">
@@ -212,7 +209,8 @@
 
 
     </v-flex>
-  </v-layout>
+   </v-layout>
+</div>
 
   </div>
 </template>
@@ -226,7 +224,10 @@ export default{
       vm:this,
       dialog: false,
       cnt:0,
+      loader:false,
+      loader2:false,
       specEventFromDb: {}
+
     }
   },
   //methods
@@ -234,11 +235,25 @@ export default{
     prev_image(){
 
         this.cnt--
+       this.loader=true
+
+
+    },
+    loaded(){
+      this.loader=false
 
     },
     next_image(){
         this.cnt++
+        this.loader=true
 
+
+    },
+    loaded2 () {
+      if(this.specEventFromDb.downloadUrl != '')
+        {
+          setTimeout(() => (this.loader2 = false), 3000)
+        }
     },
     getSpecEvent(){
       let vm = this
@@ -256,10 +271,20 @@ export default{
       'drawer'
     ])
   },
+
+
   beforeMount(){
     this.getSpecEvent(),
-    this.vm
-  }
+    this.vm,
+    this.loader2=true
+   console.log(this.loader2)
+   this.loaded2()
+  },
+  beforeUpdate(){
+    this.loader2=false
+    console.log(this.loader2)
+  },
+
 }
 </script>
 <style scoped>
@@ -270,7 +295,7 @@ export default{
   .main_image{
     background:black;
     z-index:2;
-    margin-top:-30vh;
+    margin-top:-300px;
     filter:opacity(60%);
     height: 30vh;
   }
@@ -282,6 +307,7 @@ export default{
   height: auto;
 align-items: center;
 display: flex;
+justify-content: center;
 }
 
   .main_image_card{
@@ -340,5 +366,21 @@ a {
 }
 .delete_icon{
   margin-top: 3px;
+}
+.preload {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -42px 0 0 -12px;
+  background: #1976d2;
+  transform: rotate(45deg);
+  animation: spin 1s infinite linear;
+  z-index: 7000;
+}
+@keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
 }
 </style>

@@ -6,7 +6,7 @@
 
     <v-btn
       small
-       primary
+       grey
        dark
        right
        bottom

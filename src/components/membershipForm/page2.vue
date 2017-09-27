@@ -140,11 +140,11 @@
       </v-flex>
     </v-layout>
 
-    
+
 
         <v-btn
           small
-           primary
+           grey
            dark
            right
            bottom

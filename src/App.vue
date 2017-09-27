@@ -6,7 +6,7 @@
     </header>
 
     <main >
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0" >
         <router-view ></router-view>
       </v-container>
     </main>
@@ -35,7 +35,7 @@ export default {
     padding: 0;
 }
 .container{
-  padding: 0px
+  padding: 0px;
 }
 
 </style>
