@@ -15,8 +15,9 @@ Vue.use(VueRouter)
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
-new Vue({
+ new Vue({
   router,
+
   created() {
 
     //auth Change Check
@@ -99,10 +100,10 @@ new Vue({
               .catch(function () {
                 console.log('err')
               })
-          
+
             messaging.onMessage(function(payload) {
               console.log("Message received. ", payload);
-              window.alert(payload.data.title + ' , ' + payload.data.content) //kuchu challenge toast
+            window.alert(payload.data.title + ' , ' + payload.data.content) //kuchu challenge toast
               // ...
             })
             //

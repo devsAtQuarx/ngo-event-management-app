@@ -8,6 +8,7 @@
     <main >
       <v-container fluid class="pa-0" >
         <router-view ></router-view>
+
       </v-container>
     </main>
   </v-app>
@@ -16,6 +17,7 @@
 <script>
 export default {
   name: 'app'
+
 }
 </script>
 
