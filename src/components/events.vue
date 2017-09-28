@@ -2,6 +2,7 @@
   <div class="pa-0">
 
     <v-container  grid-list-lg text-xs-center style="padding:0px">
+    
     <v-layout  row wrap justify-space-around  >
    <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
      <v-card>
@@ -10,7 +11,7 @@
        style="cursor:pointer"
        height="200px">
        </v-card-media>
-       <v-card-media v-else :src="event.downloadUrl[0]" height="200px" 
+       <v-card-media v-else :src="event.downloadUrl[0]" height="200px"
        style="cursor:pointer"
         @click="goToSpecEvent(event, i)">
        </v-card-media>
@@ -150,7 +151,7 @@ export default{
 
                   //already joined => toast or popup
 
-            
+
                   vm.text="You've Joined this event Already"
                 }else{
                   //vm.joinEvent(event,i)
