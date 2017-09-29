@@ -27,9 +27,7 @@
 <script>
   import { QrcodeReader } from 'vue-qrcode-reader'
   import moment from 'moment'
-
   export default {
-
     //data
     data(){
       return{
@@ -42,16 +40,13 @@
         text:''
       }
     },
-
     //methods
     methods:{
-
       onCapture (payload) {
         this.readData = payload.result
         this.stillActive = false
         this.checkIfUidIsLoaded(this.readData)
       },
-
       checkJoin(key){
         let vm = this
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/join')
@@ -65,7 +60,6 @@
             }
           })
       },
-
       checkLeave(key){
         let vm = this
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/leave')
@@ -80,6 +74,7 @@
              /**** toast ****/
              window.alert('you already left the event !')
 
+
              //setTimeout(function(){
                // do this after 3s =>
                vm.$router.push('/success')
@@ -88,7 +83,6 @@
            }
           })
       },
-
       setJoinTime(key){
         let vm = this
         let setTime = moment().format()
@@ -97,6 +91,7 @@
           .then(function(snapshot){
             //console.log(snapshot.val())
             //toast => joined timer
+
 
             vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/join')
               .set(setTime)
@@ -112,9 +107,9 @@
 
               })
 
+
           })
       },
-
       setLeaveTime(key){
         let vm = this
         let setTime = moment().format()
@@ -130,6 +125,7 @@
 
                   window.alert('you just left this event !')
 
+
                   //setTimeout(function(){
                     // do this after 3s =>
                     vm.$router.push('/success')
@@ -137,13 +133,12 @@
 
                 })
 
+
           })
       },
 
       loaded2 () {
-
             setTimeout(() => (this.snackbar= false), 5000)
-
       },
 
       checkEventJoin(key){
@@ -178,21 +173,15 @@
       }
 
     },
-
     //computed
     computed:{
-
     },
-
     //beforeMount
     beforeMount(){
-
     },
-
     //components
     components:{
       'qrcode-reader': QrcodeReader
     }
-
   }
 </script>
