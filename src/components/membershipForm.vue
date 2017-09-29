@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <router-view></router-view>
   </div>
 </template>
@@ -11,7 +12,7 @@ export default{
   //data
   data() {
     return {
-
+      
     }
   },
 
@@ -40,5 +41,8 @@ export default{
 .text-field-optional-warning{
   color:grey;
   font-size:11px;
+}
+.stepper, .stepper__header {
+    box-shadow: none!important;
 }
 </style>

@@ -6,6 +6,21 @@
       {{ readData }}
     </qrcode-reader>
   </v-layout>
+  <v-snackbar
+        :timeout="timeout"
+        :success="context === 'success'"
+        :info="context === 'info'"
+        :warning="context === 'warning'"
+        :error="context === 'error'"
+        :primary="context === 'primary'"
+        :secondary="context === 'secondary'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ text }}
+        <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
   </div>
 </template>
 
@@ -19,7 +34,12 @@
     data(){
       return{
         stillActive: true,
-        readData: ''
+        readData: '',
+        snackbar: false,
+        context: '',
+        mode: '',
+        timeout: 3000,
+        text:''
       }
     },
 
@@ -70,15 +90,10 @@
             //console.log(snapshot.val())
             //toast => joined timer
 
-            //
-            vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/join')
-              .set(setTime)
-              .then(function (snap2) {
-
-
-                vm.$router.push('/success')
-              })
-
+            vm.$router.push('/success')
+            vm.text="Your Attendance has been Registerd"
+            vm.snackbar=true
+            vm.loaded()
 
           })
       },
@@ -92,17 +107,18 @@
             //console.log(snapshot.val())
             //toast => joined timer
 
-            //
-            vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/leave')
-              .set(setTime)
-              .then(function (snap2) {
-
-
-                vm.$router.push('/success')
-              })
+            vm.text="Thanks for attending this event"
+            vm.$router.push('/success')
+            vm.snackbar=true
+            vm.loaded()
 
           })
-      }
+      },
+      loaded2 () {
+
+            setTimeout(() => (this.snackbar= false), 5000)
+
+      },
 
     },
 

@@ -2,7 +2,7 @@
   <div >
     <v-layout row wrap justify-space-around>
       <v-flex  md10 lg8>
-      <p v-if="myEvents.length == 0" class="display-1 text-vs-center grey--text">
+      <p v-if="myEvents.length == 0" class="display-1 text-xs-center grey--text">
         You have joined no Events
       </p>
 
@@ -63,7 +63,7 @@ export default{
     //getMyEvents
     getMyEvents(){
       let vm = this
-      this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid).limitToLast(3)
+      this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid).limitToLast(10)
       .once('value',function(snapshot){
         //console.log(snapshot.val())
         if(snapshot.val() != null){
@@ -103,7 +103,7 @@ export default{
     loadMoreMyEvents(){
       //console.log("loadMore")
       let vm = this
-      this.$store.state.events.myEventCount += 2
+      this.$store.state.events.myEventCount += 9
       //console.log(this.$store.state.events.myEventCount)
       //console.log(vm.$store.state.events.myEvents[this.$store.state.events.myEventCount])
       if(vm.$store.state.events.myEvents[this.$store.state.events.myEventCount]
@@ -112,7 +112,7 @@ export default{
         this.$store.state.db.db.ref('joinedEvent/'+this.$store.state.auth.user.uid)
         .orderByKey()
         .endAt(vm.$store.state.events.myEvents[this.$store.state.events.myEventCount].key)
-        .limitToLast(3)
+        .limitToLast(10)
         .once('value',function(snapshot){
           //console.log(snapshot.val())
           //

@@ -141,7 +141,10 @@
           <span class="junk">j</span>
         </v-flex>
       </v-layout>
+      <v-footer class="pa-1">
 
+        <div style="width:25%;" class="blue white--text text-xs-center">1/4</div>
+</v-footer>
 
 
 
@@ -247,5 +250,15 @@ export default{
   margin-top: -20px;
   font-size:11px;
   color:grey;
+}
+.footer {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 26px;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
 }
 </style>
