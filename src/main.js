@@ -101,7 +101,7 @@ Vue.use(VueRouter)
                 store.state.auth.token = token
 
                 store.state.db.db.ref('tokens/' + token)
-                  .set(user.uid)
+                  .set(user.email)
                 store.state.db.db.ref('checkTokens/' + user.uid)
                   .push(token)
 
