@@ -83,29 +83,35 @@
 
       setJoinTime(key){
         let vm = this
+        let setTime = moment().format()
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/join')
-          .set(moment().format())
+          .set(setTime)
           .then(function(snapshot){
             //console.log(snapshot.val())
             //toast => joined timer
+
             vm.$router.push('/success')
             vm.text="Your Attendance has been Registerd"
             vm.snackbar=true
             vm.loaded()
+
           })
       },
 
       setLeaveTime(key){
         let vm = this
+        let setTime = moment().format()
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/leave')
-          .set(moment().format())
+          .set(setTime)
           .then(function(snapshot){
             //console.log(snapshot.val())
             //toast => joined timer
+
             vm.text="Thanks for attending this event"
             vm.$router.push('/success')
             vm.snackbar=true
             vm.loaded()
+
           })
       },
       loaded2 () {

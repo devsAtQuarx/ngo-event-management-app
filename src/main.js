@@ -11,6 +11,7 @@ import '../node_modules/firebaseui/dist/firebaseui.css'
 import '../node_modules/vuetify/dist/vuetify.min.css'
 import './assets/css/lib/googleFont.css'
 
+
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 Vue.use(VueRouter)
