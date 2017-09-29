@@ -10,16 +10,23 @@ import Vuetify from 'vuetify'
 import '../node_modules/firebaseui/dist/firebaseui.css'
 import '../node_modules/vuetify/dist/vuetify.min.css'
 import './assets/css/lib/googleFont.css'
+import {mapGetters} from 'vuex'
 
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
  new Vue({
+
   router,
+  computed:{
+    ...mapGetters([
+      'pushNotText'
+    ])
+  },
 
   created() {
-
+     let vm=this
     //auth Change Check
     const firebaseApp = firebase.initializeApp(config)
 
@@ -33,6 +40,7 @@ Vue.use(VueRouter)
         //this.$router.push('/success')
         store.state.auth.user = user
         console.log(user)
+
 
         let tmpUserObj = {
           uid : user.uid,
@@ -103,7 +111,12 @@ Vue.use(VueRouter)
 
             messaging.onMessage(function(payload) {
               console.log("Message received. ", payload);
-            window.alert(payload.data.title + ' , ' + payload.data.content) //kuchu challenge toast
+          //  window.alert(payload.data.title + ' , ' + payload.data.content)
+            store.state.auth.pushNotText=payload.data.title + ' , ' + payload.data.content
+            store.state.auth.snackState=true
+             //kuchu challenge toast
+             vm.loaded()
+
               // ...
             })
             //
@@ -116,7 +129,15 @@ Vue.use(VueRouter)
     });
 
   },
+  methods:{
+    loaded(){
+      setTimeout(() => (store.state.auth.snackState = false), 6000)
+
+
+    }
+  },
   store,
   el: '#app',
+
   render: h => h(App)
 });
