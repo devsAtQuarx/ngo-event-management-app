@@ -1,6 +1,7 @@
 <template>
   <div>
 
+
       <v-navigation-drawer
         persistent
         v-model="vm.$store.state.auth.drawer"
@@ -119,21 +120,7 @@
         <router-view></router-view>
       </v-container>
     </main>
-    <v-snackbar
-          :timeout="timeout"
-          :success="context === 'success'"
-          :info="context === 'info'"
-          :warning="context === 'warning'"
-          :error="context === 'error'"
-          :primary="context === 'primary'"
-          :secondary="context === 'secondary'"
-          :multi-line="mode === 'multi-line'"
-          :vertical="mode === 'vertical'"
-          v-model="snackbar"
-        >
-          {{ text }}
-          <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
-        </v-snackbar>
+
 
   </div>
 </template>
@@ -141,6 +128,7 @@
 <script>
 import firebase from 'firebase'
 import {mapGetters} from 'vuex'
+
 
 export default {
 
@@ -231,7 +219,7 @@ export default {
   //
   computed:{
     ...mapGetters([
-      'user','fullscreenDialog'
+      'user','fullscreenDialog',
     ])
   },
   beforeMount(){

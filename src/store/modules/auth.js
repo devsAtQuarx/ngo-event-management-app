@@ -1,7 +1,9 @@
 const state = {
   user : {},
   token : '',
-  drawer:true
+  drawer:true,
+  pushNotText:'',
+  snackState:false
 }
 
 const getters = {
@@ -11,8 +13,14 @@ const getters = {
   token : state => {
     return state.token
   },
-  drawer : drawer => {
+  drawer : state => {
     return state.drawer
+  },
+  pushNotText : state => {
+    return state.pushNotText
+  },
+  snackState : state => {
+    return state.snackState
   }
 }
 
