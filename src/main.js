@@ -104,7 +104,7 @@ Vue.use(VueRouter)
 
             messaging.onMessage(function(payload) {
               console.log("Message received. ", payload);
-            window.alert(payload.data.title + ' , ' + payload.data.content) //kuchu challenge toast
+              window.alert(payload.data.title + ' , ' + payload.data.content) //kuchu challenge toast
               // ...
             })
             //

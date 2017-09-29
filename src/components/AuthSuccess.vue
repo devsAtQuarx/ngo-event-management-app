@@ -60,6 +60,15 @@
            </v-list-tile-content>
           </v-list-tile>
 
+          <v-list-tile @click="goToTimeSpentInEvents">
+            <v-list-tile-action>
+              <v-icon style="font-size:20px">fa-book</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Time Spent In Events</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
           <v-list-tile @click="goToDonate">
             <v-list-tile-action>
               <v-icon style="font-size:20px">fa-book</v-icon>
@@ -182,6 +191,10 @@ export default {
 
     goToDonate(){
       location.href = 'https://www.paypal.me/umangfoundation'
+    },
+
+    goToTimeSpentInEvents(){
+      this.$router.push('/calUserTime')
     },
 
     goToMembershipForm(){

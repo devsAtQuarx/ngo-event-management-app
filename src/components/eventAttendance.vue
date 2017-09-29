@@ -49,7 +49,7 @@
       onCapture (payload) {
         this.readData = payload.result
         this.stillActive = false
-        this.checkJoin(this.readData)
+        this.checkIfUidIsLoaded(this.readData)
       },
 
       checkJoin(key){
@@ -76,7 +76,15 @@
            }else{
              // do nothing ! => already attended the event (toast & route) timer
              //or crete a dialog => if yes call below func
-             vm.$router.push('/success')
+
+             /**** toast ****/
+             window.alert('you already left the event !')
+
+             //setTimeout(function(){
+               // do this after 3s =>
+               vm.$router.push('/success')
+             //}, 3000)
+
            }
           })
       },
@@ -90,10 +98,19 @@
             //console.log(snapshot.val())
             //toast => joined timer
 
-            vm.$router.push('/success')
-            vm.text="Your Attendance has been Registerd"
-            vm.snackbar=true
-            vm.loaded()
+            vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/join')
+              .set(setTime)
+              .then(function (snap2) {
+
+                /**** toast ****/
+                window.alert('you just joined an event !')
+
+                //setTimeout(function(){
+                  // do this after 3s =>
+                  vm.$router.push('/success')
+                //}, 3000)
+
+              })
 
           })
       },
@@ -107,18 +124,58 @@
             //console.log(snapshot.val())
             //toast => joined timer
 
-            vm.text="Thanks for attending this event"
-            vm.$router.push('/success')
-            vm.snackbar=true
-            vm.loaded()
+              vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/leave')
+                .set(setTime)
+                .then(function (snap2) {
+
+                  window.alert('you just left this event !')
+
+                  //setTimeout(function(){
+                    // do this after 3s =>
+                    vm.$router.push('/success')
+                  //}, 3000)
+
+                })
 
           })
       },
+
       loaded2 () {
 
             setTimeout(() => (this.snackbar= false), 5000)
 
       },
+
+      checkEventJoin(key){
+        let vm = this
+        this.$store.state.db.db.ref('checkPeopleInEvent/' + key + '/' + this.$store.state.auth.user.uid)
+          .once('value',function(snap){
+            //window.alert('st' + snap.val())  //no no no  not this , for test
+            if(snap.val() != null){
+              vm.checkJoin(key)
+            }else{
+              window.alert('you have not joined the event yet !')
+
+              //setTimeout(function(){
+                // do this after 3s =>
+                vm.$router.push('/success')
+              //}, 3000)
+            }
+          })
+      },
+
+      //checkIfUidIsLoaded
+      checkIfUidIsLoaded(key){ //recursive
+        //console.log(this.$store.state.auth.user.uid)
+        if(this.$store.state.auth.user.uid == undefined){
+          setTimeout(()=>{
+            this.showErrMsg = 'Please Wait Loading ...' // is uid is not loaded
+            this.checkIfUidIsLoaded() // call again after 1 sec
+          },1000)
+        }else{
+          this.checkEventJoin(key) // if loaded call main func
+        }
+      }
 
     },
 
