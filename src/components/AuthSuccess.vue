@@ -193,10 +193,10 @@ export default {
       if(this.$store.state.auth.user.emailVerified == true) {
 
         let vm = this
-        this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+        this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid + '/' + 'membershipNo')
           .once('value', function (snapshot) {
-            console.log(snapshot.val())
-            if (snapshot.val() == null) {
+            console.log("memNo"+snapshot.val())
+            if (snapshot.val().length == 0) {
               vm.$router.push('/membershipForm')
             } else {
               vm.$router.push('/membershipForm/lastPage')
