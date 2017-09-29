@@ -59,6 +59,16 @@
              <v-list-tile-title>Attendance</v-list-tile-title>
            </v-list-tile-content>
           </v-list-tile>
+
+          <v-list-tile @click="goToDonate">
+            <v-list-tile-action>
+              <v-icon style="font-size:20px">fa-book</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Donate</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
           <v-list-tile @click="goToContact">
             <v-list-tile-action>
               <v-icon style="font-size:20px">fa-sign-out</v-icon>
@@ -146,6 +156,10 @@ export default {
 
     goToContact(){
       this.$router.push('/contact')
+    },
+
+    goToDonate(){
+      location.href = 'https://www.paypal.me/umangfoundation'
     },
 
     goToMembershipForm(){
