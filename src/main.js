@@ -12,6 +12,7 @@ import '../node_modules/vuetify/dist/vuetify.min.css'
 import './assets/css/lib/googleFont.css'
 import {mapGetters} from 'vuex'
 
+
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 Vue.use(VueRouter)
@@ -111,6 +112,7 @@ Vue.use(VueRouter)
 
             messaging.onMessage(function(payload) {
               console.log("Message received. ", payload);
+
           //  window.alert(payload.data.title + ' , ' + payload.data.content)
             store.state.auth.pushNotText=payload.data.title + ' , ' + payload.data.content
             store.state.auth.snackState=true

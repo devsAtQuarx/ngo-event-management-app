@@ -9,6 +9,7 @@ import feedback from '@/components/feedback'
 import eventAttendance from '@/components/eventAttendance'
 import about from '@/components/about'
 import contact from '@/components/contact'
+import calUserTime from '@/components/calUserTime'
 
 import membershipForm from '@/components/membershipForm'
 import page1 from '@/components/membershipForm/page1'
@@ -30,6 +31,7 @@ export default new Router({
         { path:'/myEvents' , component:myEvents},
         { path:'/contact' , component:contact},
         { path:'/feedback/:id',component:feedback},
+        { path:'/calUserTime',component:calUserTime},
         { path:'/eventAttendance', component:eventAttendance},
         { path:'/aboutUs', component:about},
         { path : '/membershipForm' , component : membershipForm ,
