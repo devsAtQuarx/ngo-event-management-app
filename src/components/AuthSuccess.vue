@@ -61,7 +61,7 @@
           </v-list-tile>
           <v-list-tile @click="goToContact">
             <v-list-tile-action>
-              <v-icon style="font-size:20px">fa-sign-out</v-icon>
+              <v-icon style="font-size:20px">fa-address-book</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>contact</v-list-tile-title>
@@ -100,6 +100,21 @@
         <router-view></router-view>
       </v-container>
     </main>
+    <v-snackbar
+          :timeout="timeout"
+          :success="context === 'success'"
+          :info="context === 'info'"
+          :warning="context === 'warning'"
+          :error="context === 'error'"
+          :primary="context === 'primary'"
+          :secondary="context === 'secondary'"
+          :multi-line="mode === 'multi-line'"
+          :vertical="mode === 'vertical'"
+          v-model="snackbar"
+        >
+          {{ text }}
+          <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
 
   </div>
 </template>
@@ -114,8 +129,15 @@ export default {
   data(){
      return {
        vm:this,
-       drawer:true
+       drawer:true,
+       snackbar: false,
+       context: '',
+       mode: '',
+       timeout: 3000,
+       text:'',
+
      }
+
    },
 
    //
@@ -166,10 +188,17 @@ export default {
             }
           })
       }else{
-        window.alert('verify email first !')
+        this.snackbar=true
+        this.text="Please Verify Your email First"
+        this.loaded2()
       }
 
-    }
+    },
+    loaded2 () {
+
+          setTimeout(() => (this.snackbar= false), 5000)
+
+    },
   },
 
   //

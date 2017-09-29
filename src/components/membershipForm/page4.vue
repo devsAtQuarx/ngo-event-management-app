@@ -55,6 +55,10 @@
         <span class="junk">j</span>
       </v-flex>
     </v-layout>
+    <v-footer class="pa-1">
+
+      <div style="width:100%;" class="blue white--text text-xs-center">4/4</div>
+</v-footer>
     <v-btn
       small
        grey
@@ -122,3 +126,16 @@
     }
   }
 </script>
+<style>
+
+.footer {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 26px;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+}
+</style>

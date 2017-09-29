@@ -2,7 +2,7 @@
   <div class="pa-0">
 
     <v-container  grid-list-lg text-xs-center style="padding:0px">
-    
+
     <v-layout  row wrap justify-space-around  >
    <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
      <v-card>
@@ -41,7 +41,7 @@
              <span class="grey--text">{{event.date}}</span>
         </span>
 
-        <span>
+        <span class="pr-3">
          <v-icon class="icon_font" >access_time</v-icon>
          <span class="grey--text">{{event.time}}</span>
        </span>
@@ -53,7 +53,7 @@
        <v-card-actions class="pr-1">
          <v-spacer></v-spacer>
          <v-btn flat round outline class="grey--text" @click="goToSpecEvent(event, i)"
-          style="font-size:10px">
+          style="font-size:10px;height:30px">
           <v-icon style="font-size:17px" class="mr-1">fa-list-alt</v-icon>
 
           <span >See Detail</span>
@@ -61,7 +61,7 @@
 
          <v-btn flat round outline class="grey--text" @click="checkIfMember(event,i)"
          @click.native="snackbar = true"
-        style="font-size:10px">
+        style="font-size:10px;height:30px">
          <v-icon style="font-size:17px" class="mr-1">fa-calendar-check-o</v-icon>
           <span >Join Event</span>
        </v-btn>
@@ -117,7 +117,7 @@ export default{
       snackbar: false,
       context: '',
       mode: '',
-      timeout: 3000,
+      timeout: 5000,
       text:'',
       notification:false,
       dialog: false
@@ -154,7 +154,7 @@ export default{
 
                   vm.text="You've Joined this event Already"
                 }else{
-                  //vm.joinEvent(event,i)
+                  vm.joinEvent(event,i)
                   vm.text="You Joined this event"
                 }
               })
