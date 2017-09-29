@@ -63,23 +63,44 @@
 
       setJoinTime(key){
         let vm = this
+        let setTime = moment().format()
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/join')
-          .set(moment().format())
+          .set(setTime)
           .then(function(snapshot){
             //console.log(snapshot.val())
             //toast => joined timer
-            vm.$router.push('/success')
+
+            //
+            vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/join')
+              .set(setTime)
+              .then(function (snap2) {
+
+
+                vm.$router.push('/success')
+              })
+
+
           })
       },
 
       setLeaveTime(key){
         let vm = this
+        let setTime = moment().format()
         this.$store.state.db.db.ref('attendanceEvents/'+ key + '/' + this.$store.state.auth.user.uid + '/leave')
-          .set(moment().format())
+          .set(setTime)
           .then(function(snapshot){
             //console.log(snapshot.val())
             //toast => joined timer
-            vm.$router.push('/success')
+
+            //
+            vm.$store.state.db.db.ref('attendanceUser/' + vm.$store.state.auth.user.uid + '/' + key + '/leave')
+              .set(setTime)
+              .then(function (snap2) {
+
+
+                vm.$router.push('/success')
+              })
+
           })
       }
 
