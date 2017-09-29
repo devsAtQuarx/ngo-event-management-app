@@ -146,7 +146,7 @@ export default{
 
                   //not turn on
                   vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
-                    .set(vm.$store.state.auth.user.uid)
+                    .set(vm.$store.state.auth.user.email)
 
 
                   //already joined => toast or popup
@@ -182,7 +182,7 @@ export default{
             console.log(vm.notification)
             vm.text="notifications turned on"
             vm.$store.state.db.db.ref('eventToken/' + event.key + '/' + vm.$store.state.auth.token)
-              .set(vm.$store.state.auth.user.uid)
+              .set(vm.$store.state.auth.user.email)
           }else{
             //turn off not
             //not turn on
@@ -205,7 +205,7 @@ export default{
 
       //not turn on
       this.$store.state.db.db.ref('eventToken/' + event.key + '/' + this.$store.state.auth.token)
-        .set(vm.$store.state.auth.user.uid)
+        .set(vm.$store.state.auth.user.email)
 
       let tmpUserDetail = {
         uid:this.$store.state.auth.user.uid,
