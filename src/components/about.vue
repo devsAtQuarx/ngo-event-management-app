@@ -1,5 +1,6 @@
 <template>
-  <div class="grey--text pl-4 pr-4 pt-1 pb-1" text-xs-center>
+  <div class="grey--text pl-4 pr-4 pt-1 pb-1 text-xs-center" >
+    <img src="/static/img/icons/UmangMain.png" style="width:96%;height:170px;">
   <p  >
       Umang Foundation, as the name suggests,
       was conceptualized on the premise of bringing ‘Umang’ –

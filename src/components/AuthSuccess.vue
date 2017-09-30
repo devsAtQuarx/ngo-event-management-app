@@ -63,7 +63,7 @@
 
           <v-list-tile @click="goToTimeSpentInEvents">
             <v-list-tile-action>
-              <v-icon style="font-size:20px">fa-book</v-icon>
+              <v-icon style="font-size:22px">fa-clock-o</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Time Spent In Events</v-list-tile-title>
@@ -72,7 +72,7 @@
 
           <v-list-tile @click="goToDonate">
             <v-list-tile-action>
-              <v-icon style="font-size:20px">fa-book</v-icon>
+              <v-icon style="font-size:20px">fa-money</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Donate</v-list-tile-title>
@@ -112,7 +112,7 @@
     <v-toolbar class="white grey--text" style="z-index:4" dark fixed>
        <v-toolbar-side-icon class="grey--text" @click.stop="vm.$store.state.auth.drawer = !vm.$store.state.auth.drawer"></v-toolbar-side-icon>
 
-       <v-toolbar-title>Toolbar</v-toolbar-title>
+       <v-toolbar-title>Umang Foundation</v-toolbar-title>
      </v-toolbar>
 
     <main>
