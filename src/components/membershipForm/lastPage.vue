@@ -3,6 +3,8 @@
   <p class="text-xs-center ">  Your Membership No is </p>
   <br>
     <p class="grey--text text-xs-center" style="font-weight:bolder"> {{showMembershipNo}}</p>
+  {{detail}}
+
 
     <v-btn
       small
@@ -27,7 +29,8 @@ export default{
   //data
   data(){
     return {
-      showMembershipNo : ''
+      showMembershipNo : '',
+      detail: {}
     }
   },
 
@@ -40,7 +43,17 @@ export default{
        "membershipNo/").once('value',function(snapshot){
          //console.log(snapshot.val())
          vm.showMembershipNo = snapshot.val()
+        vm.getDetail()
        })
+    },
+
+    getDetail(){
+      let vm = this
+      this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+        .once('value',function(snapshot){
+        //console.log(snapshot.val())
+        vm.detail = snapshot.val()
+      })
     },
 
     goToHome(){

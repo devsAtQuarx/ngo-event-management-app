@@ -193,13 +193,18 @@ export default {
       if(this.$store.state.auth.user.emailVerified == true) {
 
         let vm = this
-        this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid + '/' + 'membershipNo')
+        this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
           .once('value', function (snapshot) {
-            console.log("memNo"+snapshot.val())
-            if (snapshot.val().length == 0) {
+            //console.log(snapshot.val())
+            if (snapshot.val() == null) {
               vm.$router.push('/membershipForm')
             } else {
-              vm.$router.push('/membershipForm/lastPage')
+              console.log(snapshot.val().membershipNo.length)
+              if(snapshot.val().membershipNo.length == 0){
+                vm.$router.push('/membershipForm')
+              }else{
+                vm.$router.push('/membershipForm/lastPage')
+              }
             }
           })
       }else{
