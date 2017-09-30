@@ -63,8 +63,8 @@ const about = resolve => {
   });
 };
 const contact = resolve => {
-  require.ensure(['@/components/about'],()=>{
-    resolve(require('@/components/about'));
+  require.ensure(['@/components/contact'],()=>{
+    resolve(require('@/components/contact'));
   });
 };
 const calUserTime = resolve => {
