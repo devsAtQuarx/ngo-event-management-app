@@ -58,7 +58,7 @@ Vue.use(VueRouter)
             if(user.providerData[0].providerId == 'password'){
               console.log('ok pswd')
               var actionCodeSettings = {
-                url: 'https://umang-foundation.firebaseapp.com/?email=' + user.email,
+                url: 'https://umangfoundation-org.firebaseapp.com/?email=' + user.email,
                 //handleCodeInApp: true
               };
               firebase.auth().currentUser.sendEmailVerification(actionCodeSettings)
