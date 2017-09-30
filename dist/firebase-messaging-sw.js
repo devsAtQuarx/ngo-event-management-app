@@ -19,7 +19,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
   const title = payload.data.title
   const options = {
     body : payload.data.content,
-    icon : 'http://www.tomevans.co/wp-content/uploads/2012/12/icon_square_udemy.png',
+    icon : 'https://pbs.twimg.com/profile_images/1542199811/Untitled.png',
     //image : payload.data.image
   }
 

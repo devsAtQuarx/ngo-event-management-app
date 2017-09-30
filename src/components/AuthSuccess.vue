@@ -190,11 +190,34 @@ export default {
     goToMembershipForm(){
       // if already a member & member ship no is generated just show in popup
       //or routte to a page to show membership no/or change detail
+      let vm = this
 
-      console.log(this.$store.state.auth.user.emailVerified)
-      if(this.$store.state.auth.user.emailVerified == true) {
+      console.log(this.$store.state.auth.user.providerData[0].providerId)
+      if(this.$store.state.auth.user.providerData[0].providerId == "password") {
+        if (this.$store.state.auth.user.emailVerified == true) {
 
-        let vm = this
+
+          this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
+            .once('value', function (snapshot) {
+              //console.log(snapshot.val())
+              if (snapshot.val() == null) {
+                vm.$router.push('/membershipForm')
+              } else {
+                console.log(snapshot.val().membershipNo.length)
+                if (snapshot.val().membershipNo.length == 0) {
+                  vm.$router.push('/membershipForm')
+                } else {
+                  vm.$router.push('/membershipForm/lastPage')
+                }
+              }
+            })
+        } else {
+          this.snackbar = true
+          window.alert('Please Verify Your email First')
+          this.text = "Please Verify Your email First"
+          this.loaded2()
+        }
+      }else{
         this.$store.state.db.db.ref('membershipDetail/' + this.$store.state.auth.user.uid)
           .once('value', function (snapshot) {
             //console.log(snapshot.val())
@@ -202,17 +225,13 @@ export default {
               vm.$router.push('/membershipForm')
             } else {
               console.log(snapshot.val().membershipNo.length)
-              if(snapshot.val().membershipNo.length == 0){
+              if (snapshot.val().membershipNo.length == 0) {
                 vm.$router.push('/membershipForm')
-              }else{
+              } else {
                 vm.$router.push('/membershipForm/lastPage')
               }
             }
           })
-      }else{
-        this.snackbar=true
-        this.text="Please Verify Your email First"
-        this.loaded2()
       }
 
     },

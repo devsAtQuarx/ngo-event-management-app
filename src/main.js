@@ -76,6 +76,7 @@ Vue.use(VueRouter)
 
         console.log(user.providerData[0].providerId)
 
+
         store.state.db.db.ref('checkAuthDetail/' + user.uid)
           .once('value',function (snapshot) {
             //console.log(snapshot.val())

@@ -3,7 +3,7 @@
   <p class="text-xs-center ">  Your Membership No is </p>
   <br>
     <p class="grey--text text-xs-center" style="font-weight:bolder"> {{showMembershipNo}}</p>
-
+    <p class="grey--text text-xs-center" style="font-weight:bolder">{{showErrMsg}}</p>
 
 
     <v-layout row wrap justify-space-around class="pa-0 grey--text" >
@@ -244,7 +244,8 @@ export default{
   data(){
     return {
       showMembershipNo : '',
-      detail: {}
+      detail: {},
+      showErrMsg:'Please Wait Loading ..'
     }
   },
 
@@ -267,11 +268,25 @@ export default{
         .once('value',function(snapshot){
         //console.log(snapshot.val())
         vm.detail = snapshot.val()
+          vm.showErrMsg = ''
       })
     },
 
     goToHome(){
       this.$router.push('/success')
+    },
+
+    //checkIfUidIsLoaded
+    checkIfUidIsLoaded(){ //recursive
+      //console.log(this.$store.state.auth.user.uid)
+      if(this.$store.state.auth.user.uid == undefined){
+        setTimeout(()=>{
+          this.showErrMsg = 'Please Wait Loading ...' // is uid is not loaded
+          this.checkIfUidIsLoaded() // call again after 1 sec
+        },1000)
+      }else{
+        this.getMemNo() // if loaded call main func
+      }
     }
   },
 
@@ -284,7 +299,7 @@ export default{
 
   //beforeMount
   beforeMount(){
-    this.getMemNo()
+    this.checkIfUidIsLoaded()
   }
 
 }

@@ -21,6 +21,8 @@ exports.sendNotification = functions.database.ref('nots/') //tokens
       }
     }
 
+
+    let emailArr = new Array()
     for(let token in request) {
       if(token != 'tokDet') {
         console.log(token)
@@ -37,11 +39,16 @@ exports.sendNotification = functions.database.ref('nots/') //tokens
               "<p>"+ "Email: " + request.tokDet.link +"</p>"
 
             };
-            console.log(request[token])
+            console.log("req tok: "+request[token])
+            console.log("index: "+emailArr.indexOf(request[token]))
+            console.log("arr: "+emailArr)
             //
-            return mailTransport.sendMail(mailOptions).then(() => {
-              return console.log('Mail sent to: ' + request[token])
-            });
+            if(emailArr.indexOf(request[token]) == -1) {
+              emailArr.push(request[token])
+              return mailTransport.sendMail(mailOptions).then(() => {
+                return console.log('Mail sent to: ' + request[token])
+              });
+            }
           })
           .catch(function (error) {
             console.log('err: ', error)
