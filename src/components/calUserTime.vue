@@ -2,33 +2,47 @@
   <div >
     <!--cal user time !
     {{userUid}}-->
-    {{showErrMsg}}
-    <span v-if="showErrMsg.length == 0">
+  <div class="grey--text display-1 text-xs-center">  {{showErrMsg}} </div>
+    <v-layout justify-space-around>
+    <span v-if="showErrMsg.length == 0" >
       <span v-if="detailArr.length != 0">
-        <span class="memdetails_head">Total Time Spent By User In Events :-</span>
-        <span >
+        <span class="memdetails_head grey--text display-1 text-xs-center">Total Time Spent By User In Events :-</span>
+        <span class= "black--text display-1 text-xs-center">
           {{userTime.hr}} hours
           {{userTime.min}} minutes
         </span>
         <br>
-        <span>Details: </span>
+        <br>
+        <v-divider></v-divider>
+        <span class="grey--text" style="font-weight:500;font-size:25px">Details: </span>
         <br>
         <span>
-          <span style="margin-left: 25px;">Event Key</span>
-          <span style="margin-left: 100px;">Duration</span>
+          <span style="float:left;font-weight:500;font-size:20px" class="grey--text">Event Key</span>
+          <span style="float:right;font-weight:500;font-size:20px" class="grey--text">Duration</span>
         </span>
-        <li v-for="i in detailArr" @click="goToSpecEvent(i.key)">
-          {{i.key}} - {{i.hr}}hr  {{i.min}}min
-        </li>
+        <br>
+        <br>
+        <v-list v-for="i in detailArr"  style="background:#f5f5f5">
+          <div style="width:100%;cursor:pointer" @click="goToSpecEvent(i.key)">
+
+            <div style="font-weight:500">{{i.key}} </div>
+
+           <div style="float:right;font-weight:500" >{{i.hr}}hr
+           {{i.min}}min</div>
+             <v-divider></v-divider>
+
+         </div>
+        </v-list>
       </span>
       <span v-else>
-        <span class="memdetails_head">Total Time Spent By User In Events :-</span>
+        <span class="memdetails_head grey--text display-1 text-xs-center">Total Time Spent By User In Events :-</span>
         <span >
           0 hours
           0 minutes
         </span>
       </span>
     </span>
+  </v-layout>
   </div>
 </template>
 
