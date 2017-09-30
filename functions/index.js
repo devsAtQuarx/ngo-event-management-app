@@ -1,6 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin')
 admin.initializeApp(functions.config().firebase)
+const nodemailer = require('nodemailer');
+const gmailEmail = encodeURIComponent(functions.config().gmail.email);
+const gmailPassword = encodeURIComponent(functions.config().gmail.password);
+const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
 exports.sendNotification = functions.database.ref('nots/') //tokens
   .onWrite(event=>{
@@ -23,6 +27,21 @@ exports.sendNotification = functions.database.ref('nots/') //tokens
         admin.messaging().sendToDevice(token, payload)
           .then(function (response) {
             console.log('sent: ', response)
+
+            //mail
+            const mailOptions = {
+              to: request[token],
+              subject:  request.tokDet.title,
+              html :
+              "<p>" + request.tokDet.content + "</p>"+
+              "<p>"+ "Email: " + request.tokDet.link +"</p>"
+
+            };
+            console.log(request[token])
+            //
+            return mailTransport.sendMail(mailOptions).then(() => {
+              return console.log('Mail sent to: ' + request[token])
+            });
           })
           .catch(function (error) {
             console.log('err: ', error)
@@ -32,10 +51,6 @@ exports.sendNotification = functions.database.ref('nots/') //tokens
 
   })
 
-const nodemailer = require('nodemailer');
-const gmailEmail = encodeURIComponent(functions.config().gmail.email);
-const gmailPassword = encodeURIComponent(functions.config().gmail.password);
-const mailTransport = nodemailer.createTransport(`smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
 exports.sendContactMessage = functions.database.ref('contactUsMail/').onWrite(event => {
   var mail = event.data.val()

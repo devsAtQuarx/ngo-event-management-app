@@ -117,7 +117,9 @@
 
     <main>
       <v-container fluid>
-        <router-view></router-view>
+        <transition name="fade" mode="out-in" v-on:after-enter="" appear>
+          <router-view></router-view>
+        </transition>
       </v-container>
     </main>
 

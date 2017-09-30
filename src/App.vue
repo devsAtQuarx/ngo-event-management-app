@@ -7,7 +7,9 @@
 
     <main >
       <v-container fluid class="pa-0" >
-        <router-view ></router-view>
+        <transition name="fade" mode="out-in" v-on:after-enter="" appear>
+          <router-view ></router-view>
+        </transition>
         <v-snackbar
               v-if="snackState==true"
               :timeout="timeout"
@@ -22,7 +24,7 @@
               v-model="snackState"
             >
             {{this.$store.state.auth.pushNotText}}
-            
+
             </v-snackbar>
 
       </v-container>
@@ -75,6 +77,13 @@ computed:{
 }
 .container{
   padding: 0px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 
 </style>
