@@ -14,6 +14,9 @@ npm run dev
 # build for production with minification
 npm run build
 
+# to serve after built for production
+firebase serve
+
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
